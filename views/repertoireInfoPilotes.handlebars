@@ -1,0 +1,28 @@
+
+<h1> Mettre ici les infos pilotes</h1>
+
+<div class="lettreRepertoire">
+  Cliquez sue une lettre : 
+	{{#each listeLettrePilote}}
+
+    <a class="letrre" href="/detailPilote/{{this.lettre}}"> {{this.lettre}}</a>
+
+  {{/each}}
+</div>
+   
+
+	 {{#each listeInfoPilote}}
+    
+
+     <div class="displayPilote">
+          <a href="/detailInfoPilote/{{this.pilnum}}"> 
+            <img class="sizeImageInfoPilote" src="/image/pilote/{{this.phoadresse}}" alt="image du pilote" />
+          </a>
+           <p> {{this.pilprenom}} {{this.pilnom}}</p>
+
+     </div>
+   
+
+     
+
+    {{/each}}

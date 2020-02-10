@@ -1,2 +1,10 @@
 
-<h1> Mettre ici la première lettre du nom des pilotes </h1>
+<div class="lettreRepertoire">
+  Cliquez sue une lettre : 
+	{{#each listeLettrePilote}}
+
+    <a class="letrre" href="/detailPilote/{{this.lettre}}"> {{this.lettre}}</a>
+
+  {{/each}}
+</div>
+   

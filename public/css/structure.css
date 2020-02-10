@@ -64,3 +64,20 @@
    max-height: 40%;
    max-width: 40%;
 }
+
+.lettreRepertoire{
+	text-align: center;
+}
+.lettre{
+	margin: 5px;
+}
+
+.sizeImageInfoPilote{
+	height: 100px;
+	width: 100px;
+	margin:10px;
+}
+.displayPilote{
+	display: inline-block;
+}
+
