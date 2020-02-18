@@ -51,35 +51,42 @@ module.exports.DetailRepertoire = function(request, response){
         response.render('repertoireInfoPilotes', response);
         }
     );// fin async
-/*
-    model.getInfoPilote(data, function (err, result) {
-        if (err) {
-            // gestion de l'erreur
-            console.log(err);
-            return;
-        }
-        response.listeInfoPilote = result;
-        //console.log(result);
- 
-       response.render('repertoireInfoPilotes', response);
-   } );
-   */
  };
+
 
  module.exports.DetailInfoPilote = function(request, response){
     response.title = 'Détail des infos des pilotes';
     let data = request.params.pilnum;
-    model.getInfoDetailPilote(data, function (err, result) {
+    async.parallel([
+        function(callback){
+            model.getLettrePilote(function (err, result) {callback(null,result) });
+            //pour afficher à nouveau les premères lettres des pilotes 
+
+        }, // fin callback0
+        function (callback){
+            model.getInfoDetailPilote(data, (function (errPil, resultPil) {callback(null,resultPil) })); 
+        }, //fin callback 1
+        function (callback){
+            model.getSponsors(data, (function (errSp, resultSp) {callback(null,resultSp) })); 
+        }, //fin callback 2
+        function (callback){
+            model.getPhoto(data, (function(errPh, resultPh){callback (null,resultPh)}));
+        }
+    ],
+    function (err,result){
         if (err) {
             // gestion de l'erreur
             console.log(err);
             return;
         }
-        response.infoDetailPilote = result;
-        //console.log(result);
- 
-       response.render('repertoireInfoDetailPilotes', response);
-   } );
+        response.listeLettrePilote = result[0];
+        response.listeInfoPilote=result[1];
+        response.listeSponsors=result[2];
+        response.listePhotos=result[3];
+        
+        response.render('repertoireInfoDetailPilotes', response);
+        }
+    );// fin async
+ };
 
-   
- }
+ 
