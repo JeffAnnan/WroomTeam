@@ -34,7 +34,7 @@ module.exports.getInfoPilote = function (lettre, callback) {
         	  // s'il n'y a pas d'erreur de connexion
         	  // execution de la requête SQL
 						let sql ="SELECT pil.pilnum, pilnom, pilprenom, phoadresse FROM pilote pil join photo pho on pho.pilnum=pil.pilnum where phonum=1 and pilnom LIKE '"+ lettre + "%' order by pilnom asc";
-						console.log (sql);
+						//console.log (sql);
             connexion.query(sql, callback);
 
             // la connexion retourne dans le pool
