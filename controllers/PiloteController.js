@@ -24,11 +24,11 @@ module.exports.DetailRepertoire = function(request, response){
     async.parallel([
         function(callback){
             model.getLettrePilote(function (err, result) {callback(null,result) });
-            //pour afficher à nouveau les premères lettres des pilotes 
+            //pour afficher à nouveau les premères lettres des pilotes
 
         }, // fin callback0
         function (callback){
-            model.getInfoPilote(data, (function (errPil, resultPil) {callback(null,resultPil) })); 
+            model.getInfoPilote(data, (function (errPil, resultPil) {callback(null,resultPil) }));
         }, //fin callback 1
     ],
     function (err,result){
@@ -38,13 +38,13 @@ module.exports.DetailRepertoire = function(request, response){
             return;
         }
         response.listeLettrePilote = result[0];
-        
+
         donnees=result[1];
         /*
         for (let i=1; 1<donnees.length; i++) {
             if (i%3==0) {
                 donnees[i].ligne="1";
-            }//fin if    
+            }//fin if
         }//fin for
         */
         response.listeInfoPilote=donnees;
@@ -60,7 +60,7 @@ module.exports.DetailRepertoire = function(request, response){
         }
         response.listeInfoPilote = result;
         //console.log(result);
- 
+
        response.render('repertoireInfoPilotes', response);
    } );
    */
@@ -77,9 +77,9 @@ module.exports.DetailRepertoire = function(request, response){
         }
         response.infoDetailPilote = result;
         //console.log(result);
- 
+
        response.render('repertoireInfoDetailPilotes', response);
    } );
 
-   
+
  }
