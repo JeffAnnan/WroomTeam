@@ -81,3 +81,12 @@
 	display: inline-block;
 }
 
+.sizeImageListeCircuit{
+  height: 32px;
+	width: 32px;
+}
+
+.listeCircuit{
+  position: absolute;
+  z-index: 3000;
+}
