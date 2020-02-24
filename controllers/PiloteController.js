@@ -89,5 +89,3 @@ module.exports.DetailRepertoire = function(request, response){
         }
     );// fin async
  };
-    );// fin async
- };
