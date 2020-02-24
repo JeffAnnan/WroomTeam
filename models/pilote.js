@@ -88,10 +88,10 @@ module.exports.getPhoto = function (pilnum, callback) {
         if(!err){
         	  // s'il n'y a pas d'erreur de connexion
         	  // execution de la requête SQL
-                  let sql ="SELECT phoadresse, pi.pilnum"+
+                  let sql ="SELECT phocommentaire,phoadresse, pi.pilnum"+
                   " FROM pilote pi"+
                   " INNER JOIN photo ph ON ph.pilnum=pi.pilnum"+
-                  " WHERE pi.pilnum="+pilnum;
+                  " WHERE phonum !=1 AND pi.pilnum="+pilnum;
 						console.log (sql);
             connexion.query(sql, callback);
 
