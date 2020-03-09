@@ -61,14 +61,14 @@ module.exports.DetailRepertoire = function(request, response){
     async.parallel([
         function(callback){
             model.getLettrePilote(function (err, result) {callback(null,result) });
-            //pour afficher à nouveau les premères lettres des pilotes 
+            //pour afficher à nouveau les premères lettres des pilotes
 
         }, // fin callback0
         function (callback){
-            model.getInfoDetailPilote(data, (function (errPil, resultPil) {callback(null,resultPil) })); 
+            model.getInfoDetailPilote(data, (function (errPil, resultPil) {callback(null,resultPil) }));
         }, //fin callback 1
         function (callback){
-            model.getSponsors(data, (function (errSp, resultSp) {callback(null,resultSp) })); 
+            model.getSponsors(data, (function (errSp, resultSp) {callback(null,resultSp) }));
         }, //fin callback 2
         function (callback){
             model.getPhoto(data, (function(errPh, resultPh){callback (null,resultPh)}));
@@ -84,10 +84,8 @@ module.exports.DetailRepertoire = function(request, response){
         response.listeInfoPilote=result[1];
         response.listeSponsors=result[2];
         response.listePhotos=result[3];
-        
+
         response.render('repertoireInfoDetailPilotes', response);
         }
-    );// fin async
- };
     );// fin async
  };

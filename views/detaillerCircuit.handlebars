@@ -1,11 +1,15 @@
-	{{> listerCircuitVuePartielle}}
-	<div class="test">
+	<div class="vuePatielleDetailCircuit">
+			{{> listerCircuitVuePartielle}}
+	</div>
+	<div class="informationsComplestDetailCircuit">
 		{{#each detailCircuit}}
-			<img src="/image/circuit/{{this.ciradresseimage}}" alt="image du circuit" />
-			<p>Nom : {{this.cirnom}}</p>
-			<p>Longueur : {{this.cirlongueur}} m</p>
-			<p>Nombre de spectateurs : {{this.cirnbspectateurs}}</p>
-			<p>Pays : {{this.paynom}}</p>
-			<p>{{this.cirtext}}</p>
+			<img class="imagesDetailCircuit"src="/image/circuit/{{this.ciradresseimage}}" alt="image du circuit" />
+			<div class="infosCircuit">
+				<p><b>Nom :</b> {{this.cirnom}}</p>
+				<p><b>Longueur :</b> {{this.cirlongueur}} m</p>
+				<p><b>Nombre de spectateurs :</b> {{this.cirnbspectateurs}}</p>
+				<p><b>Pays : </b>{{this.paynom}}</p>
+			</div>
+			<p align="justify">{{this.cirtext}}</p>
 		{{/each}}
 	</div>

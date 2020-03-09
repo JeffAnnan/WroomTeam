@@ -65,13 +65,13 @@
    max-width: 40%;
 }
 
+/* détail pilote & répertoire */
 .lettreRepertoire{
 	text-align: center;
 }
 .lettre{
 	margin: 5px;
 }
-
 .sizeImageInfoPilote{
 	height: 100px;
 	width: 100px;
@@ -80,13 +80,93 @@
 .displayPilote{
 	display: inline-block;
 }
+/* /////////////////////// */
 
+/* détail circuit */
 .sizeImageListeCircuit{
   height: 32px;
 	width: 32px;
 }
-
-.listeCircuit{
-  position: absolute;
-  z-index: 3000;
+.informationsComplestDetailCircuit{
+  position: relative;
 }
+.vuePatielleDetailCircuit{
+  position: absolute;
+  left: 990px;
+    z-index: 2;
+}
+.imagesDetailCircuit{
+  height: 350px;
+  width: 190px;
+  z-index: 3;
+}
+.infosCircuit{
+  	display: inline-block;
+}
+/* /////////////////////// */
+
+/* détail écurie */
+.informationsComplestDetailEcurie{
+  position: relative;
+}
+.vuePatielleDetailEcurie{
+  position: absolute;
+  left: 990px;
+    z-index: 2;
+}
+.imagesDetailEcurie{
+  height: 290px;
+  width: 270px;
+  z-index: 3;
+}
+.infosEcurie{
+  	display: inline-block;
+    vertical-align: top;
+}
+.displayVoitureEcurie{
+  display: inline-block;
+}
+.sizeImageVoitureEcurie{
+  height: 100px;
+  width: 100px;
+
+}
+/* /////////////////////// */
+
+/* infobulle pilote écurie */
+.tooltip
+{
+  text-decoration:none;
+  position:relative;
+}
+.tooltip span
+{
+  display:none;
+
+  -moz-border-radius:6px;
+  -webkit-border-radius:6px;
+  border-radius:6px;
+  color:black;
+  background:white;
+}
+.tooltip span img
+{
+  float:left;
+  margin:0px 8px 8px 0;
+}
+.tooltip:hover span
+{
+  display:flex;
+  position:absolute;
+  top:0;
+  left:0;
+  z-index:1000;
+  width: 230px;
+  min-height:128px;
+  border:1px solid black;
+  margin-top:12px;
+  margin-left:32px;
+  overflow:hidden;
+  padding:8px;
+}
+/* /////////////////////// */
