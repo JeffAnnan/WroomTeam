@@ -1,0 +1,48 @@
+	<div class="vuePatielleDetailEcurie">
+			{{> listerEcurieVuePartielle}}
+	</div>
+	<div class="informationsComplestDetailEcurie">
+		{{#each detailEcurie}}
+			<div class="infosEcurie">
+				<img class="imagesDetailEcurie"src="/image/ecurie/{{this.ecuadresseimage}}" alt="image de l'ecurie" />
+			</div>
+			<div class="infosEcurie">
+				<p><b>Nom :</b> {{this.ecunom}}</p>
+				<p><b>Directeur :</b> {{this.ecunomdir}} m</p>
+				<p><b>Adresse :</b> {{this.ecuadrsiege}}</p>
+				<p><b>Pays : </b>{{this.paynom}}</p>
+			</div>
+		{{/each}}
+		{{#if detailEcuriePilote}}
+			<p><b>Pilotes :</b></p>
+
+
+					{{#each detailEcuriePilote}}
+						<a class="tooltip" href="/detailInfoPilote/{{this.pilnum}}">
+							<p>{{this.pilprenom}} {{this.pilnom}}</p>
+					  <span>
+							<div class="infobulleAffichage">
+								<img class="sizeImageInfoPilote" src="/image/pilote/{{this.phoadresse}}" alt="image du pilote" />
+							</div>
+							<div class="infobulleAffichage">
+								<p class="infobulleAffichage"><b>{{this.pilprenom}} {{this.pilnom}}</b> </p>
+ 						   	{{this.piltexte}}
+							</div>
+					  </span>
+						</a>
+				 	{{/each}}
+
+
+			<br>
+			{{#each detailEcurieVoiture}}
+				<div class="displayVoitureEcurie">
+					<img class="sizeImageVoitureEcurie"src="/image/ecurie/voiture/{{this.voiadresseimage}}" alt="image des voitures" />
+					<p>{{this.voinom}}</p>
+					<p>{{this.typelibelle}}</p>
+				</div>
+			{{/each}}
+
+		{{else}}
+			<p>Cette écurie ne participe pas au championnat cette année</p>
+		{{/if}}
+	</div>

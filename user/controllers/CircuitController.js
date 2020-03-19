@@ -15,30 +15,15 @@ response.title = 'Liste des circuits';
 response.render('listerCircuit', response);
 });
 }
-/*
-module.exports.DetailCircuit = function(request, response){
-response.title = 'Détails des circuits';
-  let data = request.params.cirnum;
- model.getDetailCircuit(data, function (err, result) {
-     if (err) {
-         // gestion de l'erreur
-         console.log(err);
-         return;
-     }
-     response.detailCircuit = result;
-     //console.log(result);
-response.render('detaillerCircuit', response);
-});
-*/
 
 module.exports.DetailCircuit = function(request, response){
     let data = request.params.cirnum;
-    response.title = 'Détails du circuit de '+ data;
+    response.title = 'Détails du circuit N° '+ data;
 
     async.parallel([
         function(callback){
             model.getListeCircuit(function (err, result) {callback(null,result) });
-            //pour afficher à nouveau les premères lettres des pilotes
+            //pour afficher à nouveau les circuits
 
         }, // fin callback0
         function (callback){

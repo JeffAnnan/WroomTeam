@@ -1,4 +1,4 @@
-let model = require('../models/resultat.js'); 
+let model = require('../models/resultat.js');
 let async=require('async');
   // //////////////////////////L I S T E R    R E S U L T A T S
   module.exports.ListerResultat = function(request, response){
@@ -37,7 +37,7 @@ let async=require('async');
             console.log(err);
             return;
         }
-    
+
         response.listeGrandPrix = result[0];
         response.listeTitre = result[1];
         response.listeTableau = result[2];
@@ -46,4 +46,3 @@ let async=require('async');
     );// fin async
 
  };
-
