@@ -12,6 +12,6 @@ module.exports.ListerEcurie = function(request, response){
         }
         response.listeEcurie = result;
         //console.log(result);
-response.render('listerEcurie', response);
+    response.render('ajoutPilote', response);
 });
 }

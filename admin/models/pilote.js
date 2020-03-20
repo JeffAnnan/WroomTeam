@@ -11,13 +11,13 @@ let db = require('../configDb');
 * Récupérer l'intégralité les écuries avec l'adresse de la photo du pays de l'écurie
 * @return Un tableau qui contient le N°, le nom de l'écurie et le nom de la photo du drapeau du pays
 */
-module.exports.getLettrePilote = function (callback) {
+module.exports.getPilotes = function (callback) {
    // connection à la base
 	db.getConnection(function(err, connexion){
         if(!err){
         	  // s'il n'y a pas d'erreur de connexion
         	  // execution de la requête SQL
-						let sql ="SELECT distinct SUBSTR(pilnom, 1, 1) as lettre FROM pilote order by lettre asc";
+						let sql ="SELECT pilnom, pilprenom, pildatenais FROM pilote";
 						//console.log (sql);
             connexion.query(sql, callback);
 
@@ -27,13 +27,13 @@ module.exports.getLettrePilote = function (callback) {
       });
 };
 
-module.exports.getInfoPilote = function (lettre, callback) {
+module.exports.getNationalite = function (callback) {
    // connection à la base
 	db.getConnection(function(err, connexion){
         if(!err){
         	  // s'il n'y a pas d'erreur de connexion
         	  // execution de la requête SQL
-						let sql ="SELECT pil.pilnum, pilnom, pilprenom, phoadresse FROM pilote pil join photo pho on pho.pilnum=pil.pilnum where phonum=1 and pilnom LIKE '"+ lettre + "%' order by pilnom asc";
+						let sql ="SELECT paynum, paynom FROM pays ORDER BY paynom";
 						//console.log (sql);
             connexion.query(sql, callback);
 
@@ -42,6 +42,16 @@ module.exports.getInfoPilote = function (lettre, callback) {
          }
       });
 };
+
+module.exports.setPilote = function (data,callback) {
+   // connection à la base
+    db.getConnection(function(err, connexion){
+        if(!err){
+            connexion.query('INSERT INTO pilote SET ? ',data,callback);
+            connexion.release();
+         }
+      });
+}
 
 module.exports.getInfoDetailPilote = function (pilnum, callback) {
    // connection à la base

@@ -20,7 +20,7 @@ module.exports.Connexion = function(request, response){
 response.title = 'Connexion';
 let login = request.body.login;
 let mdp = request.body.mdp;
- model.getConnexion(login,mdp, function (err, result) {
+ model.getConnexion(login, function (err, result) {
      if (err) {
          // gestion de l'erreur
          console.log(err);

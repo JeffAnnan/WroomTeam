@@ -17,9 +17,10 @@ app.post('/menu', HomeController.Connexion);
     app.post('/', HomeController.Connexion);
 
 // pilotes
-    app.get('/repertoirePilote', PiloteController.Repertoire);
-    app.get('/detailPilote/:lettre', PiloteController.DetailRepertoire);
-    app.get('/detailInfoPilote/:pilnum', PiloteController.DetailInfoPilote);
+    app.get('/pilotes', PiloteController.Pilotes);
+    app.get('/ajout', PiloteController.AjoutPilote);
+    app.post('/piloteAjoute', PiloteController.FinAjoutPilote);
+    //app.get('/detailInfoPilote/:pilnum', PiloteController.DetailInfoPilote);
 
  // circuits
    app.get('/circuits', CircuitController.ListerCircuit);

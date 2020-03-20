@@ -17,9 +17,8 @@ module.exports.getListeEcurie = function (callback) {
         if(!err){
         	  // s'il n'y a pas d'erreur de connexion
         	  // execution de la requête SQL
-						let sql ="SELECT ecunum, payadrdrap, ecunom FROM " +
-                            "ecurie e INNER JOIN pays p ";
-						sql= sql + "ON p.paynum=e.paynum ORDER BY ecunom";
+						let sql ="SELECT ecunum, ecunom FROM " +
+                            "ecurie ORDER BY ecunom";
 						//console.log (sql);
             connexion.query(sql, callback);
 
