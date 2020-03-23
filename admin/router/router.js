@@ -23,8 +23,9 @@ app.post('/menu', HomeController.Connexion);
     //app.get('/detailInfoPilote/:pilnum', PiloteController.DetailInfoPilote);
 
  // circuits
-   app.get('/circuits', CircuitController.ListerCircuit);
-   app.get('/detailCircuit/:cirnum', CircuitController.DetailCircuit);
+   app.get('/circuits', CircuitController.Circuits);
+   app.get('/ajoutCircuit', CircuitController.AjoutCircuit);
+   app.post('/circuitAjoute', CircuitController.FinAjoutCircuit);
 
 // Ecuries
    app.get('/ecuries', EcurieController.ListerEcurie);
