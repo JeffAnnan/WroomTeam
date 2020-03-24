@@ -17,7 +17,7 @@ module.exports.getCircuits = function (callback) {
         if(!err){
         	  // s'il n'y a pas d'erreur de connexion
         	  // execution de la requête SQL
-						let sql ="SELECT cirnom, cirlongueur, cirnbspectateurs FROM circuit ORDER BY cirlongueur";
+						let sql ="SELECT cirnum, cirnom, cirlongueur, cirnbspectateurs FROM circuit ORDER BY cirlongueur";
 						//console.log (sql);
             connexion.query(sql, callback);
 
@@ -33,7 +33,7 @@ module.exports.getListePays = function (callback) {
         if(!err){
         	  // s'il n'y a pas d'erreur de connexion
         	  // execution de la requête SQL
-						let sql ="SELECT p.paynum, p.paynom FROM circuit c INNER JOIN pays p on p.paynum = c.paynum ORDER BY p.paynom";
+						let sql ="SELECT DISTINCT p.paynum, p.paynom FROM circuit c INNER JOIN pays p on p.paynum = c.paynum ORDER BY p.paynom";
 						//console.log (sql);
             connexion.query(sql, callback);
 
@@ -51,4 +51,53 @@ module.exports.setCircuit = function (data,callback) {
             connexion.release();
         }
     });
-}
+};
+
+module.exports.getInfoCircuitSelect = function (cirnum,callback) {
+	// connection à la base
+	db.getConnection(function(err, connexion){
+			 if(!err){
+					// s'il n'y a pas d'erreur de connexion
+					// execution de la requête SQL
+					let sql ="SELECT cirnum, cirnom, cirlongueur, paynum, "+
+					"ciradresseimage, cirnbspectateurs, cirnbspectateurs, cirtext "+
+					"FROM circuit WHERE cirnum="+cirnum;
+					//console.log (sql);
+					 connexion.query(sql, callback);
+
+					 // la connexion retourne dans le pool
+					 connexion.release();
+			}
+	});
+};
+
+module.exports.modifCircuit = function (cirnom, cirlongueur, paynum, ciradresseimage, cirnbspectateurs, cirtext, cirnum, callback) {
+   // connection à la base
+    db.getConnection(function(err, connexion){
+        if(!err){
+					req="UPDATE circuit SET cirnom='"+cirnom+"', cirlongueur="+cirlongueur+
+					", paynum="+paynum+", ciradresseimage='"+ciradresseimage+
+					"', cirnbspectateurs="+cirnbspectateurs+", cirtext='"+cirtext+
+					"' WHERE cirnum="+cirnum;
+					console.log(req);
+            connexion.query(req,callback);
+            connexion.release();
+        }
+    });
+};
+
+module.exports.supprimerCircuit = function (cirnum, callback) {
+   // connection à la base
+	db.getConnection(function(err, connexion){
+        if(!err){
+        	  // s'il n'y a pas d'erreur de connexion
+        	  // execution de la requête SQL
+						let sql ="DELETE FROM circuit WHERE cirnum="+cirnum;
+						//console.log (sql);
+            connexion.query(sql, callback);
+
+            // la connexion retourne dans le pool
+            connexion.release();
+         }
+      });
+};

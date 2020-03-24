@@ -1,0 +1,27 @@
+<h1>Modifier un Circuit</h1>
+{{#each listeInfoCircuitSelect}}
+  <form action="/circuitModifie/{{this.cirnum}}" method="post">
+
+      <label>Nom</label><input type="text" name="cirnom" value="{{this.cirnom}}"><br />
+      <label>Longueur</label><input type="text" name="cirlongueur" value="{{this.cirlongueur}}"> m<br />
+      <label>Pays</label>
+
+      <select name="paynum">
+{{#each ../listePays}}
+
+{{#if ../listeInfoCircuitSelect}}
+  <p>ok</p>
+{{else}}
+
+{{/if}}
+          <option value="{{this.paynum}}">{{this.paynom}}</option>
+{{/each}}
+      </select><br />
+
+      <label>Image</label><input type="file" name="ciradresseimage" value="{{this.ciradresseimage}}" multiple><br />
+      <label>Nombre de spectateurs</label><input type="text" name="cirnbspectateurs" value="{{this.cirnbspectateurs}}"> personnes<br />
+      <label>Description</label><input type="textarea" name="cirtext" value="{{this.cirtext}}"><br />
+
+    <input type="submit" value="modifier">
+  </form>
+{{/each}}
