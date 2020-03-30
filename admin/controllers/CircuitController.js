@@ -66,14 +66,15 @@ module.exports.AjoutCircuit = function(request, response){
 */
      response.title = 'modifier un circuit';
      let data = request.params.cirnum;
-     //console.log(data);
+     let data1 = request.params.paynum;
+     console.log(data1);
      async.parallel([
          function(callback){
              model.getInfoCircuitSelect(data, (function (err, result) {callback(null,result) }));
              //pour récupérer les information du circuit sélectionné
          }, // fin callback0
          function (callback){
-             model.getListePays((function (errPays, resultPays) {callback(null,resultPays) }));
+             model.getListePaysMemeQueCircuitSelect(data1, (function (errPays, resultPays) {callback(null,resultPays) }));
          }, //fin callback 1
      ],
      function (err,result){
@@ -83,7 +84,7 @@ module.exports.AjoutCircuit = function(request, response){
              return;
          }
          response.listeInfoCircuitSelect = result[0];
-         response.listePays = result[1];
+         response.listePaysMemeQueCircuitSelect = result[1];
          //console.log(result[0]);
          response.render('modifCircuit', response);
          }
@@ -95,12 +96,13 @@ module.exports.AjoutCircuit = function(request, response){
      let data = request.body.cirnom;
      let data1 = request.body.cirlongueur;
      let data2 = request.body.paynum;
-     let data3 = request.body.ciradresseimage;
-     let data4 = request.body.cirnbspectateurs;
-     let data5 = request.body.cirtext;
-     let data6 = request.params.cirnum;
-     console.log(data, data1, data2, data3,data4, data5, data6);
-     model.modifCircuit(data, data1, data2, data3,data4, data5, data6, function (err, result) {
+     let data3 = request.body.ciradresseimageDefault;
+     let data4 = request.body.ciradresseimageChangee;
+     let data5 = request.body.cirnbspectateurs;
+     let data6 = request.body.cirtext;
+     let data7 = request.params.cirnum;
+     //console.log(data, data1, data2, data3,data4, data5, data6, data7);
+     model.modifCircuit(data, data1, data2, data3,data4, data5, data6, data7, function (err, result) {
          if (err) {
              // gestion de l'erreur
              console.log(err);

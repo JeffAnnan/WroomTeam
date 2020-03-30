@@ -17,7 +17,7 @@ module.exports.getCircuits = function (callback) {
         if(!err){
         	  // s'il n'y a pas d'erreur de connexion
         	  // execution de la requête SQL
-						let sql ="SELECT cirnum, cirnom, cirlongueur, cirnbspectateurs FROM circuit ORDER BY cirlongueur";
+						let sql ="SELECT cirnum, cirnom, paynum, cirlongueur, cirnbspectateurs FROM circuit ORDER BY cirlongueur";
 						//console.log (sql);
             connexion.query(sql, callback);
 
@@ -33,7 +33,7 @@ module.exports.getListePays = function (callback) {
         if(!err){
         	  // s'il n'y a pas d'erreur de connexion
         	  // execution de la requête SQL
-						let sql ="SELECT DISTINCT p.paynum, p.paynom FROM circuit c INNER JOIN pays p on p.paynum = c.paynum ORDER BY p.paynom";
+						let sql ="SELECT paynum, paynom FROM pays ORDER BY paynom";
 						//console.log (sql);
             connexion.query(sql, callback);
 
@@ -71,10 +71,41 @@ module.exports.getInfoCircuitSelect = function (cirnum,callback) {
 	});
 };
 
-module.exports.modifCircuit = function (cirnom, cirlongueur, paynum, ciradresseimage, cirnbspectateurs, cirtext, cirnum, callback) {
+module.exports.getListePaysMemeQueCircuitSelect= function (paynumSelect, callback) {
+   // connection à la base
+	db.getConnection(function(err, connexion){
+        if(!err){
+        	  // s'il n'y a pas d'erreur de connexion
+        	  // execution de la requête SQL
+						let sql ="SELECT paynum, paynom, IF(paynum="+paynumSelect+",true,false)"
+						+" AS estmeme FROM pays ORDER BY paynom";
+						console.log (sql);
+            connexion.query(sql, callback);
+
+            // la connexion retourne dans le pool
+            connexion.release();
+         }
+      });
+};
+
+
+module.exports.modifCircuit = function (cirnom, cirlongueur, paynum, ciradresseimageDefault, ciradresseimageChangee, cirnbspectateurs, cirtext, cirnum, callback) {
    // connection à la base
     db.getConnection(function(err, connexion){
         if(!err){
+					//on prend soit le intpu hidden qui reprend l'image du circuit
+					//si on desire chnager d'image le selcreur d'image charge une image
+					//il faut donc prendre cette valeur et pas le nom de l'image charge par default
+					//et qui correpond a l'image charge lors de la creation du circuit
+					let ciradresseimage;
+					if (!ciradresseimageChangee=="") {
+						//l'adresse de l'image est celle selctionnee par le selcteur
+						ciradresseimage=ciradresseimageChangee
+					}else {
+						//l'adresse de l'image est celle chargee par default et saisie
+						//lors de la creation du circuit
+						ciradresseimage=ciradresseimageDefault
+					}
 					req="UPDATE circuit SET cirnom='"+cirnom+"', cirlongueur="+cirlongueur+
 					", paynum="+paynum+", ciradresseimage='"+ciradresseimage+
 					"', cirnbspectateurs="+cirnbspectateurs+", cirtext='"+cirtext+
@@ -82,6 +113,7 @@ module.exports.modifCircuit = function (cirnom, cirlongueur, paynum, ciradressei
 					console.log(req);
             connexion.query(req,callback);
             connexion.release();
+
         }
     });
 };
