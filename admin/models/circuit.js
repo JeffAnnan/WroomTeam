@@ -93,10 +93,10 @@ module.exports.modifCircuit = function (cirnom, cirlongueur, paynum, ciradressei
    // connection à la base
     db.getConnection(function(err, connexion){
         if(!err){
-					//on prend soit le intpu hidden qui reprend l'image du circuit
-					//si on desire chnager d'image le selcreur d'image charge une image
-					//il faut donc prendre cette valeur et pas le nom de l'image charge par default
-					//et qui correpond a l'image charge lors de la creation du circuit
+					//on prend soit le input hidden qui reprend l'image du circuit
+					//si on desire changer d'image le secteur d'image charge une image,
+					//il faut donc prendre cette valeur et pas le nom de l'image chargee par default
+					//et qui correpond a l'image chargee lors de la creation du circuit
 					let ciradresseimage;
 					if (!ciradresseimageChangee=="") {
 						//l'adresse de l'image est celle selctionnee par le selcteur
