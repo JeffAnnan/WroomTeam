@@ -23,8 +23,12 @@ app.post('/menu', HomeController.Connexion);
     //app.get('/detailInfoPilote/:pilnum', PiloteController.DetailInfoPilote);
 
  // circuits
-   app.get('/circuits', CircuitController.ListerCircuit);
-   app.get('/detailCircuit/:cirnum', CircuitController.DetailCircuit);
+   app.get('/circuits', CircuitController.Circuits);
+   app.get('/ajoutCircuit', CircuitController.AjoutCircuit);
+   app.post('/circuitAjoute', CircuitController.FinAjoutCircuit);
+   app.get('/modifCircuit/:cirnum/:paynum', CircuitController.ModifCircuit);
+   app.post('/circuitModifie/:cirnum', CircuitController.FinModifCircuit);
+   app.get('/supprCircuit/:cirnum', CircuitController.SupprCircuit);
 
 // Ecuries
    app.get('/ecuries', EcurieController.ListerEcurie);

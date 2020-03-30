@@ -1,63 +1,132 @@
 let model = require('../models/circuit.js');
 let async=require('async');
-// ////////////////////////  L I S T E R     C I R C U I T S
+// ///////////////////////// R E P E R T O I R E    D E S    C I R C U I T S
 
-module.exports.ListerCircuit = function(request, response){
-response.title = 'Liste des circuits';
- model.getListeCircuit( function (err, result) {
-     if (err) {
-         // gestion de l'erreur
-         console.log(err);
-         return;
-     }
-     response.listeCircuit = result;
-     //console.log(result);
-response.render('listerCircuit', response);
-});
-}
-/*
-module.exports.DetailCircuit = function(request, response){
-response.title = 'Détails des circuits';
-  let data = request.params.cirnum;
- model.getDetailCircuit(data, function (err, result) {
-     if (err) {
-         // gestion de l'erreur
-         console.log(err);
-         return;
-     }
-     response.detailCircuit = result;
-     //console.log(result);
-response.render('detaillerCircuit', response);
-});
-*/
+module.exports.Circuits = function(request, response){
+  response.title = 'Gestion des circuits';
+     model.getCircuits( function (err, result) {
+         if (err) {
+             // gestion de l'erreur
+             console.log(err);
+             return;
+         }
+         response.listeCircuits = result;
+         //console.log(result);
 
-module.exports.DetailCircuit = function(request, response){
-    let data = request.params.cirnum;
-    response.title = 'Détails du circuit de '+ data;
+         response.render('gestionCircuits', response);
+    } );
+};
 
-    async.parallel([
-        function(callback){
-            model.getListeCircuit(function (err, result) {callback(null,result) });
-            //pour afficher à nouveau les premères lettres des pilotes
-
-        }, // fin callback0
-        function (callback){
-            model.getDetailCircuit(data, (function (errCir, resultCir) {callback(null,resultCir) }));
-        }, //fin callback 1
-    ],
-    function (err,result){
+module.exports.AjoutCircuit = function(request, response){
+    response.title = 'ajouter un circuit';
+    model.getListePays(function (err, result) {
         if (err) {
             // gestion de l'erreur
             console.log(err);
             return;
         }
-        response.listeCircuit = result[0];
+        response.listePays = result;
+        //console.log(result);
 
-        donnees=result[1];
-
-        response.detailCircuit=donnees;
-        response.render('detaillerCircuit', response);
-        }
-    );// fin async
-
+        response.render('ajoutCircuit', response);
+    } );
  };
+
+ module.exports.FinAjoutCircuit = function(request, response){
+    response.title = 'Circuit ajouté';
+    let data = request.body;
+    model.setCircuit(data, function (err, result) {
+        if (err) {
+            // gestion de l'erreur
+            console.log(err);
+            return;
+        }
+        response.listeAjout = result;
+        //console.log(result);
+
+       response.render('finAjoutCircuit', response);
+   } );
+ };
+
+ module.exports.ModifCircuit = function(request, response){
+   /*
+     response.title = 'modifier un circuit';
+     let data = request.params.cirnum;
+     model.getInfoCircuitSelect(data, function (err, result) {
+         if (err) {
+             // gestion de l'erreur
+             console.log(err);
+             return;
+         }
+         response.listeInfoCircuitSelect = result;
+         //console.log(result);
+
+         response.render('modifCircuit', response);
+     } );
+*/
+     response.title = 'modifier un circuit';
+     let data = request.params.cirnum;
+     let data1 = request.params.paynum;
+     console.log(data1);
+     async.parallel([
+         function(callback){
+             model.getInfoCircuitSelect(data, (function (err, result) {callback(null,result) }));
+             //pour récupérer les information du circuit sélectionné
+         }, // fin callback0
+         function (callback){
+             model.getListePaysMemeQueCircuitSelect(data1, (function (errPays, resultPays) {callback(null,resultPays) }));
+         }, //fin callback 1
+     ],
+     function (err,result){
+         if (err) {
+             // gestion de l'erreur
+             console.log(err);
+             return;
+         }
+         response.listeInfoCircuitSelect = result[0];
+         response.listePaysMemeQueCircuitSelect = result[1];
+         //console.log(result[0]);
+         response.render('modifCircuit', response);
+         }
+     );// fin async
+  };
+
+  module.exports.FinModifCircuit = function(request, response){
+     response.title = 'Circuit modifié';
+     let data = request.body.cirnom;
+     let data1 = request.body.cirlongueur;
+     let data2 = request.body.paynum;
+     let data3 = request.body.ciradresseimageDefault;
+     let data4 = request.body.ciradresseimageChangee;
+     let data5 = request.body.cirnbspectateurs;
+     let data6 = request.body.cirtext;
+     let data7 = request.params.cirnum;
+     //console.log(data, data1, data2, data3,data4, data5, data6, data7);
+     model.modifCircuit(data, data1, data2, data3,data4, data5, data6, data7, function (err, result) {
+         if (err) {
+             // gestion de l'erreur
+             console.log(err);
+             return;
+         }
+         response.listeAjout = result;
+         //console.log(result);
+
+        response.render('finModifCircuit', response);
+    } );
+  };
+
+  module.exports.SupprCircuit = function(request, response){
+      response.title = 'supprimer un circuit';
+      let data = request.params.cirnum;
+      model.supprimerCircuit(data, function (err, result) {
+          if (err) {
+              // gestion de l'erreur
+              console.log(err);
+              return;
+          }
+          response.circuitSuprime = result;
+          //console.log(result);
+
+          response.render('finSuppressionCircuit', response);
+      } );
+   };
