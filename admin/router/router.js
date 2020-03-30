@@ -32,10 +32,16 @@ app.post('/menu', HomeController.Connexion);
 
 // Ecuries
    app.get('/ecuries', EcurieController.ListerEcurie);
+   app.get('/ajoutEcurie', EcurieController.AjoutEcurie);
+   app.post('/ecurieAjoute', EcurieController.FinAjoutEcurie);
+   app.get('/modifEcurie/:ecunum/:paynum', EcurieController.ModifEcurie);
+   app.post('/ecurieModifie/:ecunum', EcurieController.FinModifEcurie);
+   app.get('/supprEcurie/:ecunum', EcurieController.SupprEcurie);
 
  //Résultats
    app.get('/resultats', ResultatController.ListerResultat);
    app.get('/GrandPrix/:gpnum', ResultatController.DetailResultat);
+
 
 
 

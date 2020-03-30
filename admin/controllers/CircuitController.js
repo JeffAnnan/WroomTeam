@@ -49,25 +49,9 @@ module.exports.AjoutCircuit = function(request, response){
  };
 
  module.exports.ModifCircuit = function(request, response){
-   /*
-     response.title = 'modifier un circuit';
-     let data = request.params.cirnum;
-     model.getInfoCircuitSelect(data, function (err, result) {
-         if (err) {
-             // gestion de l'erreur
-             console.log(err);
-             return;
-         }
-         response.listeInfoCircuitSelect = result;
-         //console.log(result);
-
-         response.render('modifCircuit', response);
-     } );
-*/
      response.title = 'modifier un circuit';
      let data = request.params.cirnum;
      let data1 = request.params.paynum;
-     console.log(data1);
      async.parallel([
          function(callback){
              model.getInfoCircuitSelect(data, (function (err, result) {callback(null,result) }));

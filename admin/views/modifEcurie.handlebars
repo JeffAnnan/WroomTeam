@@ -1,0 +1,22 @@
+<h1>Modifier une Ecurie</h1>
+{{#each listeInfoEcurieSelect}}
+  <form action="/ecurieModifie/{{this.ecunum}}" method="post">
+      <label>Nom</label><input type="text" name="ecunom" value="{{this.ecunom}}"><br />
+      <label>Direcreur</label><input type="text" name="ecunomdir" value="{{this.ecunomdir}}"><br />
+      <label>Adresse du siege</label><input type="text" name="ecuadrsiege" value="{{this.ecuadrsiege}}"><br />
+      <label>Points</label><input type="text" name="ecupoints" value="{{this.ecupoints}}"><br />
+      <label>Pays</label>
+      <select name="paynum">
+{{#each ../listePaysMemeQueEcurieSelect}}
+  {{#if this.estmeme}}
+    <option value="{{this.paynum}}" selected>{{this.paynom}}</option>
+  {{else}}
+    <option value="{{this.paynum}}">{{this.paynom}}</option>
+  {{/if}}
+{{/each}}
+      </select><br />
+      <input type="hidden" name="ecuadresseimageDefault" value="{{this.ecuadresseimage}}">
+      <label>Image</label><input type="file" name="ecuadresseimageChangee" multiple><br />
+    <input type="submit" value="modifier">
+  </form>
+{{/each}}
