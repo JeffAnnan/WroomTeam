@@ -4,8 +4,12 @@
 * sa méthode getConnection permet de se connecter à MySQL
 *
 */
-
 let db = require('../configDb');
+var express = require('express'),
+    Busboy = require('busboy'),
+		inspect = require('util').inspect,
+    path = require('path'),
+    fs = require('fs');
 
 /*
 * Récupérer l'intégralité des circuits avec l'adresse de la photo du pays du circuit
@@ -52,6 +56,73 @@ module.exports.setCircuit = function (data,callback) {
         }
     });
 };
+
+
+module.exports.insertFile = function (req, res, callback) {
+
+	var busboy = new Busboy({ headers: req.headers });
+  //variables pour recuperer les donnes du formualaire qui ne sont plus accessibles
+  //avec le request.body et utilisable en meme temps avec l'upload file
+  //a cause du enctype="multipart/form-data" du formulaire
+  //IMPORTANT : on recupere donc ces donnees grace a un middleware appele Busboy
+  //busboy permet de parser les donnes recues. On recupere donc TOUTES les donnes
+  //du formulaire
+  var recupDonneeForm = [];
+	busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
+    //on recupere ciradresseimage
+    if (fieldname === 'ciradresseimage') {
+      recupDonneeForm.push(filename);
+    }
+		var saveTo = path.join(__dirname, '../public/image/circuit/' + filename);
+		file.pipe(fs.createWriteStream(saveTo));
+	});
+
+  busboy.on('field', (fieldName, val) => {
+    //on recupere cirnom
+    if (fieldName === 'cirnom') {
+      recupDonneeForm.push(val);
+    }
+    //on recupere cirlongueur
+    if (fieldName === 'cirlongueur') {
+      recupDonneeForm.push(val);
+    }
+    //on recupere paynum
+    if (fieldName === 'paynum') {
+      recupDonneeForm.push(val);
+    }
+    //on recupere cirnbspectateurs
+    if (fieldName === 'cirnbspectateurs') {
+      recupDonneeForm.push(val);
+    }
+    //on recupere cirtext
+    if (fieldName === 'cirtext') {
+      recupDonneeForm.push(val);
+    }
+  });
+
+	busboy.on('finish', function() {
+     //compostion de la reponse que l'on aurez du avoir du formualire
+     var data = {
+        cirnom: recupDonneeForm[0],
+        cirlongueur: recupDonneeForm[1],
+        paynum: recupDonneeForm[2],
+        ciradresseimage: recupDonneeForm[3],
+        cirnbspectateurs: recupDonneeForm[4],
+        cirtext: recupDonneeForm[5],
+    };
+    //insertion dans la BD
+    db.getConnection(function(err, connexion){
+       if(!err){
+         connexion.query('INSERT INTO circuit SET ? ',data, callback);
+         connexion.release();
+       }
+     });
+	});
+	req.pipe(busboy);
+
+};
+
+
 
 module.exports.getInfoCircuitSelect = function (cirnum,callback) {
 	// connection à la base

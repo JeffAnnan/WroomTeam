@@ -26,10 +26,10 @@ module.exports.AjoutPilote = function(request, response){
     async.parallel([
         function(callback){
             modelEcurie.getListeEcurie(function (err, result) {callback(null,result) });
-            //pour afficher à nouveau les premères lettres des pilotes 
+            //pour afficher à nouveau les premères lettres des pilotes
         }, // fin callback0
         function (callback){
-            model.getNationalite((function (errPil, resultPil) {callback(null,resultPil) })); 
+            model.getNationalite((function (errPil, resultPil) {callback(null,resultPil) }));
         }, //fin callback 1
     ],
     function (err,result){
@@ -56,11 +56,7 @@ module.exports.AjoutPilote = function(request, response){
         }
         response.listeAjout = result;
         //console.log(result);
- 
+
        response.render('finAjoutPilote', response);
    } );
- }
-  
-
-
- 
+ };

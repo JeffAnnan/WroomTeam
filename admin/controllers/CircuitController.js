@@ -18,6 +18,7 @@ module.exports.Circuits = function(request, response){
 };
 
 module.exports.AjoutCircuit = function(request, response){
+
     response.title = 'ajouter un circuit';
     model.getListePays(function (err, result) {
         if (err) {
@@ -30,9 +31,56 @@ module.exports.AjoutCircuit = function(request, response){
 
         response.render('ajoutCircuit', response);
     } );
+
  };
 
  module.exports.FinAjoutCircuit = function(request, response){
+   response.title = 'Circuit ajouté';
+   let data1 = request;
+   let data2 = response;
+
+   model.insertFile(data1, data2, function (err, result) {
+       if (err) {
+           // gestion de l'erreur
+           console.log(err);
+           return;
+       }
+        response.listeAjout = result;
+       //console.log(result);
+       response.render('finAjoutCircuit', response);
+   } );
+
+/*
+   response.title = 'Circuit ajouté';
+   let data = request.body;
+   let data1 = request;
+   let data2 = response;
+
+   async.parallel([
+       function(callback){
+           model.setCircuit(data, (function (err, result) {callback(null,result) }));
+           //pour inserer dans la BD ce circuit
+       }, // fin callback0
+       function (callback){
+           //insertion de l'image dans le dossier '../public/image/circuit/'
+           model.insertFile(data1, data2, (function (errInsert, resultInsert) {callback(null,resultInsert) }));
+       }, //fin callback 1
+   ],
+   function (err,result){
+       if (err) {
+           // gestion de l'erreur
+           console.log(err);
+           return;
+       }
+       response.listeAjout = result[0];
+       //response.fichierImageInsere = result[1];
+       //console.log(result[0]);
+       response.render('finAjoutCircuit', response);
+       }
+   );// fin async
+
+
+
     response.title = 'Circuit ajouté';
     let data = request.body;
     model.setCircuit(data, function (err, result) {
@@ -46,6 +94,7 @@ module.exports.AjoutCircuit = function(request, response){
 
        response.render('finAjoutCircuit', response);
    } );
+   */
  };
 
  module.exports.ModifCircuit = function(request, response){
