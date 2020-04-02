@@ -5,6 +5,7 @@ let ResultatController = require('./../controllers/ResultatController');
 let EcurieController = require('./../controllers/EcurieController');
 let PiloteController = require('./../controllers/PiloteController');
 let CircuitController = require('./../controllers/CircuitController');
+let SponsorController = require('./../controllers/SponsorController');
 
 // Routes
 module.exports = function(app){
@@ -50,6 +51,15 @@ app.post('/menu', HomeController.Connexion);
  //Résultats
    app.get('/resultats', AuthentificationController.AdminConnexion,ResultatController.ListerResultat);
    app.get('/GrandPrix/:gpnum',AuthentificationController.AdminConnexion, ResultatController.DetailResultat);
+
+ // Sponsors
+   app.get('/sponsor', SponsorController.Sponsors);
+   app.get('/ajoutSponsor', SponsorController.AjoutSponsor);
+   app.post('/sponsorAjoute', SponsorController.FinAjoutSponsor);
+   app.get('/modifSponsor/:sponum/:ecunum?', SponsorController.ModifSponsor);
+   app.post('/sponsorModifie/:sponum/:ecunum?', SponsorController.FinModifSponsor);
+   app.get('/supprSponsor/:sponum', SponsorController.SupprSponsor);
+
 
 
 

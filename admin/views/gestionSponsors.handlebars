@@ -1,0 +1,29 @@
+<img src="/image/cat_sponsor.png" alt="">
+<h1>Gestion des Sponsors</h1>
+<a href="/ajoutSponsor">
+    <img src="image/act_add.png" alt="">
+    Ajouter un sponsor</a>
+<table>
+    <tr>
+        <th>Nom</th>
+        <th>Activite</th>
+        <th>Actions</th>
+    </tr>
+
+    {{#each listeSponsors}}
+    <tr>
+        <td>{{this.sponom}}</td>
+        <td>{{this.sposectactivite}}</td>
+        <td>
+            <a href="/modifSponsor/{{this.sponum}}/{{this.ecunum}}">
+                <img src="/image/act_edit.png" alt="">
+                Modifier
+            </a>
+            <a href="/supprSponsor/{{this.sponum}}">
+                <img src="/image/act_delete.png" alt="">
+                Supprimer
+            </a>
+        </td>
+    </tr>
+    {{/each}}
+</table>

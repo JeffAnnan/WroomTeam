@@ -1,0 +1,21 @@
+<h1>Modifier un Sponsor</h1>
+{{#each listeInfoSponsorSelect}}
+  <form action="/sponsorModifie/{{this.sponum}}/{{this.ecunum}}" method="post">
+
+      <label>Nom</label><input type="text" name="sponom" value="{{this.sponom}}"><br />
+      <label>Secteur d'activite</label><input type="text" name="sposectactivite" value="{{this.sposectactivite}}"><br />
+      <label>Ecurie sponsoriee</label>
+
+      <select name="ecunum">
+    <option value="NULL" selected>Aucune</option>
+{{#each ../listePaysMemeQueSponsorSelect}}
+  {{#if this.estmeme}}
+    <option value="{{this.ecunum}}" selected>{{this.ecunom}}</option>
+  {{else}}
+    <option value="{{this.ecunum}}">{{this.ecunom}}</option>
+  {{/if}}
+{{/each}}
+      </select><br />
+    <input type="submit" value="modifier">
+  </form>
+{{/each}}
