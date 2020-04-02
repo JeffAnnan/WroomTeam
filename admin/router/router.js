@@ -32,15 +32,25 @@ app.post('/menu', HomeController.Connexion);
     app.get('/supp/:pilnum', AuthentificationController.AdminConnexion, PiloteController.SupprimerPilote);
 
  // circuits
-   app.get('/circuits', CircuitController.ListerCircuit);
-   app.get('/detailCircuit/:cirnum', CircuitController.DetailCircuit);
+   app.get('/circuits', CircuitController.Circuits);
+   app.get('/ajoutCircuit', CircuitController.AjoutCircuit);
+   app.post('/circuitAjoute', CircuitController.FinAjoutCircuit);
+   app.get('/modifCircuit/:cirnum/:paynum', CircuitController.ModifCircuit);
+   app.post('/circuitModifie/:cirnum', CircuitController.FinModifCircuit);
+   app.get('/supprCircuit/:cirnum', CircuitController.SupprCircuit);
 
 // Ecuries
    app.get('/ecuries', EcurieController.ListerEcurie);
+   app.get('/ajoutEcurie', EcurieController.AjoutEcurie);
+   app.post('/ecurieAjoute', EcurieController.FinAjoutEcurie);
+   app.get('/modifEcurie/:ecunum/:paynum', EcurieController.ModifEcurie);
+   app.post('/ecurieModifie/:ecunum', EcurieController.FinModifEcurie);
+   app.get('/supprEcurie/:ecunum', EcurieController.SupprEcurie);
 
  //Résultats
    app.get('/resultats', ResultatController.ListerResultat);
    app.get('/GrandPrix/:gpnum', ResultatController.DetailResultat);
+
 
 
 
