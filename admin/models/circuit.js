@@ -47,17 +47,6 @@ module.exports.getListePays = function (callback) {
       });
 };
 
-module.exports.setCircuit = function (data,callback) {
-   // connection à la base
-    db.getConnection(function(err, connexion){
-        if(!err){
-            connexion.query('INSERT INTO circuit SET ? ',data,callback);
-            connexion.release();
-        }
-    });
-};
-
-
 module.exports.insertFile = function (req, res, callback) {
 
 	var busboy = new Busboy({ headers: req.headers });
@@ -73,7 +62,7 @@ module.exports.insertFile = function (req, res, callback) {
     if (fieldname === 'ciradresseimage') {
       recupDonneeForm.push(filename);
     }
-		var saveTo = path.join(__dirname, '../public/image/circuit/' + filename);
+		var saveTo = path.join(__dirname, '../../user/public/image/circuit/' + filename);
 		file.pipe(fs.createWriteStream(saveTo));
 	});
 
@@ -122,8 +111,6 @@ module.exports.insertFile = function (req, res, callback) {
 
 };
 
-
-
 module.exports.getInfoCircuitSelect = function (cirnum,callback) {
 	// connection à la base
 	db.getConnection(function(err, connexion){
@@ -150,7 +137,7 @@ module.exports.getListePaysMemeQueCircuitSelect= function (paynumSelect, callbac
         	  // execution de la requête SQL
 						let sql ="SELECT paynum, paynom, IF(paynum="+paynumSelect+",true,false)"
 						+" AS estmeme FROM pays ORDER BY paynom";
-						console.log (sql);
+            //console.log (sql);
             connexion.query(sql, callback);
 
             // la connexion retourne dans le pool
@@ -181,7 +168,7 @@ module.exports.modifCircuit = function (cirnom, cirlongueur, paynum, ciradressei
 					", paynum="+paynum+", ciradresseimage='"+ciradresseimage+
 					"', cirnbspectateurs="+cirnbspectateurs+", cirtext='"+cirtext+
 					"' WHERE cirnum="+cirnum;
-					console.log(req);
+					//console.log(req);
             connexion.query(req,callback);
             connexion.release();
 

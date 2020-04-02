@@ -49,52 +49,6 @@ module.exports.AjoutCircuit = function(request, response){
        //console.log(result);
        response.render('finAjoutCircuit', response);
    } );
-
-/*
-   response.title = 'Circuit ajouté';
-   let data = request.body;
-   let data1 = request;
-   let data2 = response;
-
-   async.parallel([
-       function(callback){
-           model.setCircuit(data, (function (err, result) {callback(null,result) }));
-           //pour inserer dans la BD ce circuit
-       }, // fin callback0
-       function (callback){
-           //insertion de l'image dans le dossier '../public/image/circuit/'
-           model.insertFile(data1, data2, (function (errInsert, resultInsert) {callback(null,resultInsert) }));
-       }, //fin callback 1
-   ],
-   function (err,result){
-       if (err) {
-           // gestion de l'erreur
-           console.log(err);
-           return;
-       }
-       response.listeAjout = result[0];
-       //response.fichierImageInsere = result[1];
-       //console.log(result[0]);
-       response.render('finAjoutCircuit', response);
-       }
-   );// fin async
-
-
-
-    response.title = 'Circuit ajouté';
-    let data = request.body;
-    model.setCircuit(data, function (err, result) {
-        if (err) {
-            // gestion de l'erreur
-            console.log(err);
-            return;
-        }
-        response.listeAjout = result;
-        //console.log(result);
-
-       response.render('finAjoutCircuit', response);
-   } );
-   */
  };
 
  module.exports.ModifCircuit = function(request, response){
@@ -104,7 +58,7 @@ module.exports.AjoutCircuit = function(request, response){
      async.parallel([
          function(callback){
              model.getInfoCircuitSelect(data, (function (err, result) {callback(null,result) }));
-             //pour récupérer les information du circuit sélectionné
+             //pour récupérer les informations du circuit sélectionné
          }, // fin callback0
          function (callback){
              model.getListePaysMemeQueCircuitSelect(data1, (function (errPays, resultPays) {callback(null,resultPays) }));
