@@ -1,5 +1,6 @@
 
 let HomeController = require('./../controllers/HomeController');
+let AuthentificationController = require('./../controllers/AuthentificationController');
 let ResultatController = require('./../controllers/ResultatController');
 let EcurieController = require('./../controllers/EcurieController');
 let PiloteController = require('./../controllers/PiloteController');
@@ -17,10 +18,18 @@ app.post('/menu', HomeController.Connexion);
     app.post('/', HomeController.Connexion);
 
 // pilotes
-    app.get('/pilotes', PiloteController.Pilotes);
-    app.get('/ajout', PiloteController.AjoutPilote);
-    app.post('/piloteAjoute', PiloteController.FinAjoutPilote);
-    //app.get('/detailInfoPilote/:pilnum', PiloteController.DetailInfoPilote);
+    app.get('/pilotes', AuthentificationController.AdminConnexion, PiloteController.Pilotes);
+    //ajouter
+    
+    app.get('/ajout', AuthentificationController.AdminConnexion,PiloteController.AjoutPilote);
+    app.post('/piloteAjoute',AuthentificationController.AdminConnexion, PiloteController.FinAjoutPilote);
+
+    //modifier
+    app.get('/modif/:pilnum', AuthentificationController.AdminConnexion,PiloteController.ModifierPilote);
+    app.post('/piloteModifie/:pilnum', PiloteController.FinModifierPilote);
+
+    // supprimer
+    app.get('/supp/:pilnum', AuthentificationController.AdminConnexion, PiloteController.SupprimerPilote);
 
  // circuits
    app.get('/circuits', CircuitController.Circuits);
