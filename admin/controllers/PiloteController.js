@@ -21,8 +21,6 @@ module.exports.Pilotes = function(request, response){
 
 module.exports.AjoutPilote = function(request, response){
     response.title = 'ajouter un pilote';
-    let data = request.body.nom;
-    console.log(data);
     async.parallel([
         function(callback){
             modelEcurie.getListeEcurie(function (err, result) {callback(null,result) });
@@ -58,6 +56,64 @@ module.exports.AjoutPilote = function(request, response){
         //console.log(result);
  
        response.render('finAjoutPilote', response);
+   } );
+ }
+
+ module.exports.ModifierPilote = function(request, response){
+    response.title = 'modifier un pilote';
+    let data = request.params.pilnum;
+    async.parallel([
+        function(callback){
+            model.getInfoModif(data,(function (err, result) {callback(null,result) }));
+            //pour afficher à nouveau les premères lettres des pilotes 
+        }, // fin callback0
+        function (callback){
+            modelEcurie.getListeEcurie((function (errPil, resultPil) {callback(null,resultPil) })); 
+        }, //fin callback 1
+        function (callback){
+            model.getNationalite((function (errPil, resultPil) {callback(null,resultPil) })); 
+        }, //fin callback 2
+    ],
+    function (err,result){
+        if (err) {
+            // gestion de l'erreur
+            console.log(err);
+            return;
+        }
+        response.listeInfoModif = result[0];
+        response.listeEcurie = result [1];
+        response.listeNationalite = result [2];
+        response.render('modifierPilote', response);
+        }
+    );// fin async
+ };
+
+ module.exports.FinModifierPilote = function(request, response){
+    response.title = 'Pilote modifier';
+    let pilnum = request.params.pilnum;
+    let data = request.body;
+    model.updatePilote(pilnum,data, function (err, result) {
+        if (err) {
+            // gestion de l'erreur
+            console.log(err);
+            return;
+        }
+
+ 
+       response.render('finModifPilote', response);
+   } );
+ }
+
+ module.exports.SupprimerPilote = function(request, response){
+    response.title = 'pilote supprimé';
+    let pilnum = request.params.pilnum;
+    model.deletePilote(pilnum, function (err, result) {
+        if (err) {
+            // gestion de l'erreur
+            console.log(err);
+            return;
+        }
+       response.render('supprimePilote', response);
    } );
  }
   

@@ -1,0 +1,30 @@
+<h1>Modifier un pilote</h1>
+
+<form action="/piloteModifie/{{this.listeInfoModif.0.pilnum}}" method="post">
+  <label>Prénom</label><input type="text" name="pilprenom" value="{{listeInfoModif.0.pilprenom}}"><br />
+  <label>Nom</label><input type="text" name="pilnom" value="{{listeInfoModif.0.pilnom}}"><br />
+  <label>Date de naissance</label><input type="date" name="pildatenais" value="{{formatDate listeInfoModif.0.pildatenais 'YYYY-MM-DD'}}"><br />
+  <label>Nationalité</label>
+    <select name="paynum">
+      {{#each listeNationalite}}
+      <option value="{{this.paynum}}">{{this.paynom}}</option>
+       {{/each}}
+  </select><br />
+  <label>Ecurie</label>
+    <select name="ecunum">
+      {{#each listeEcurie}}
+      <option value="{{this.ecunum}}">{{this.ecunom}}</option>
+      {{/each}}
+  </select><br />
+  <label>Points</label>
+  {{#if listeInfoModif.0.pilpoints}}
+    <input type="text" name="pilpoints" value="{{listeInfoModif.0.pilpoints}}"> pts<br />
+  {{else}}
+    <input type="text" name="pilpoints" value="0"> pts<br />
+  {{/if}}
+  <label>Poids</label><input type="text" name="pilpoids" value="{{listeInfoModif.0.pilpoids}}"> kg<br />
+  <label>Taille</label><input type="text" name="piltaille" value="{{listeInfoModif.0.piltaille}}"> cm<br />
+  <label>Description</label><textarea  name="piltexte"  rows="10" cols="120">{{listeInfoModif.0.piltexte}}</textarea><br />
+  <input type="submit" value="Modifier">
+</form>
+
