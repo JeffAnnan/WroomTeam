@@ -26,30 +26,30 @@ app.post('/menu', HomeController.Connexion);
 
     //modifier
     app.get('/modif/:pilnum', AuthentificationController.AdminConnexion,PiloteController.ModifierPilote);
-    app.post('/piloteModifie/:pilnum', PiloteController.FinModifierPilote);
+    app.post('/piloteModifie/:pilnum', AuthentificationController.AdminConnexion,PiloteController.FinModifierPilote);
 
     // supprimer
     app.get('/supp/:pilnum', AuthentificationController.AdminConnexion, PiloteController.SupprimerPilote);
 
  // circuits
-   app.get('/circuits', CircuitController.Circuits);
-   app.get('/ajoutCircuit', CircuitController.AjoutCircuit);
-   app.post('/circuitAjoute', CircuitController.FinAjoutCircuit);
-   app.get('/modifCircuit/:cirnum/:paynum', CircuitController.ModifCircuit);
-   app.post('/circuitModifie/:cirnum', CircuitController.FinModifCircuit);
-   app.get('/supprCircuit/:cirnum', CircuitController.SupprCircuit);
+   app.get('/circuits', AuthentificationController.AdminConnexion,CircuitController.Circuits);
+   app.get('/ajoutCircuit', AuthentificationController.AdminConnexion,CircuitController.AjoutCircuit);
+   app.post('/circuitAjoute',AuthentificationController.AdminConnexion, CircuitController.FinAjoutCircuit);
+   app.get('/modifCircuit/:cirnum/:paynum', AuthentificationController.AdminConnexion,CircuitController.ModifCircuit);
+   app.post('/circuitModifie/:cirnum', AuthentificationController.AdminConnexion,CircuitController.FinModifCircuit);
+   app.get('/supprCircuit/:cirnum',AuthentificationController.AdminConnexion, CircuitController.SupprCircuit);
 
 // Ecuries
-   app.get('/ecuries', EcurieController.ListerEcurie);
-   app.get('/ajoutEcurie', EcurieController.AjoutEcurie);
-   app.post('/ecurieAjoute', EcurieController.FinAjoutEcurie);
-   app.get('/modifEcurie/:ecunum/:paynum', EcurieController.ModifEcurie);
-   app.post('/ecurieModifie/:ecunum', EcurieController.FinModifEcurie);
-   app.get('/supprEcurie/:ecunum', EcurieController.SupprEcurie);
+   app.get('/ecuries', AuthentificationController.AdminConnexion,EcurieController.ListerEcurie);
+   app.get('/ajoutEcurie', AuthentificationController.AdminConnexion,EcurieController.AjoutEcurie);
+   app.post('/ecurieAjoute', AuthentificationController.AdminConnexion,EcurieController.FinAjoutEcurie);
+   app.get('/modifEcurie/:ecunum/:paynum', AuthentificationController.AdminConnexion,EcurieController.ModifEcurie);
+   app.post('/ecurieModifie/:ecunum', AuthentificationController.AdminConnexion,EcurieController.FinModifEcurie);
+   app.get('/supprEcurie/:ecunum', AuthentificationController.AdminConnexion,EcurieController.SupprEcurie);
 
  //Résultats
-   app.get('/resultats', ResultatController.ListerResultat);
-   app.get('/GrandPrix/:gpnum', ResultatController.DetailResultat);
+   app.get('/resultats', AuthentificationController.AdminConnexion,ResultatController.ListerResultat);
+   app.get('/GrandPrix/:gpnum',AuthentificationController.AdminConnexion, ResultatController.DetailResultat);
 
 
 
