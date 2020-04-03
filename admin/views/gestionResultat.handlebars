@@ -1,0 +1,14 @@
+<img src="/image/cat_resultat.png" alt="">
+<h1>Résultats</h1>
+
+<form action="/saisieResultat" method="get">
+    <label>Sélectionner un grand prix :</label><br />
+      <select name="gpnum">
+      {{#each listeGrandPrix}}
+      <option value="{{this.gpnum}}">{{this.gpnom}}</option>
+      {{/each}}
+  </select><br />
+
+    <input type="submit" value="Valider">
+</form>
+
