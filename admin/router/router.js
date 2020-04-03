@@ -49,16 +49,20 @@ app.post('/menu', HomeController.Connexion);
    app.get('/supprEcurie/:ecunum', AuthentificationController.AdminConnexion,EcurieController.SupprEcurie);
 
  //Résultats
-   app.get('/resultats', AuthentificationController.AdminConnexion,ResultatController.ListerResultat);
-   app.get('/GrandPrix/:gpnum',AuthentificationController.AdminConnexion, ResultatController.DetailResultat);
+ app.get('/resultats', AuthentificationController.AdminConnexion,ResultatController.Resultat);
+ app.get('/saisieResultat',AuthentificationController.AdminConnexion, ResultatController.SaisieResultat);
+// supprimer
+ app.get('/suppResultat/:pilnum/:gpnum',AuthentificationController.AdminConnexion, ResultatController.SupprimerResultat);
+// ajout
+  app.post('/ajoutResultat/:gpnum',AuthentificationController.AdminConnexion, ResultatController.AjoutResultat);
 
  // Sponsors
-   app.get('/sponsor', SponsorController.Sponsors);
-   app.get('/ajoutSponsor', SponsorController.AjoutSponsor);
-   app.post('/sponsorAjoute', SponsorController.FinAjoutSponsor);
-   app.get('/modifSponsor/:sponum/:ecunum?', SponsorController.ModifSponsor);
-   app.post('/sponsorModifie/:sponum/:ecunum?', SponsorController.FinModifSponsor);
-   app.get('/supprSponsor/:sponum', SponsorController.SupprSponsor);
+   app.get('/sponsor',AuthentificationController.AdminConnexion, SponsorController.Sponsors);
+   app.get('/ajoutSponsor', AuthentificationController.AdminConnexion,SponsorController.AjoutSponsor);
+   app.post('/sponsorAjoute', AuthentificationController.AdminConnexion,SponsorController.FinAjoutSponsor);
+   app.get('/modifSponsor/:sponum/:ecunum?', AuthentificationController.AdminConnexion,SponsorController.ModifSponsor);
+   app.post('/sponsorModifie/:sponum/:ecunum?', AuthentificationController.AdminConnexion,SponsorController.FinModifSponsor);
+   app.get('/supprSponsor/:sponum', AuthentificationController.AdminConnexion,SponsorController.SupprSponsor);
 
 
 
