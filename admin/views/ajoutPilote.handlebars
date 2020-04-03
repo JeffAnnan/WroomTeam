@@ -1,6 +1,6 @@
 <h1>Ajouter un pilote</h1>
 
-<form action="/piloteAjoute" method="post">
+<form action="/piloteAjoute" enctype="multipart/form-data" method="post">
   <label>Prénom</label><input type="text" name="pilprenom"><br />
   <label>Nom</label><input type="text" name="pilnom"><br />
   <label>Date de naissance</label><input type="date" name="pildatenais"><br />
@@ -19,6 +19,7 @@
   <label>Points</label><input type="text" name="pilpoints"> pts<br />
   <label>Poids</label><input type="text" name="pilpoids"> kg<br />
   <label>Taille</label><input type="text" name="piltaille"> cm<br />
+  <label>Image</label><input type="file" name="phoadresse"><br />
   <label>Description</label><textarea  name="piltexte"  rows="10" cols="120"></textarea><br />
   <input type="submit" value="ajouter">
 </form>

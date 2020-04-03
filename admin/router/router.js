@@ -21,12 +21,12 @@ app.post('/menu', HomeController.Connexion);
 // pilotes
     app.get('/pilotes', AuthentificationController.AdminConnexion, PiloteController.Pilotes);
     //ajouter
-    
     app.get('/ajout', AuthentificationController.AdminConnexion,PiloteController.AjoutPilote);
     app.post('/piloteAjoute',AuthentificationController.AdminConnexion, PiloteController.FinAjoutPilote);
 
+
     //modifier
-    app.get('/modif/:pilnum', AuthentificationController.AdminConnexion,PiloteController.ModifierPilote);
+    app.get('/modif/:pilnum/:paynum/:ecunum?', AuthentificationController.AdminConnexion,PiloteController.ModifierPilote);
     app.post('/piloteModifie/:pilnum', AuthentificationController.AdminConnexion,PiloteController.FinModifierPilote);
 
     // supprimer
