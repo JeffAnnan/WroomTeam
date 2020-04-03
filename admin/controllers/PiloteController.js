@@ -47,13 +47,16 @@ module.exports.AjoutPilote = function(request, response){
     response.title = 'Pilote ajouté';
     let data = request.body;
     model.setPilote(data, function (err, result) {
-        if (err) {
+        if (err) 
+        {
             // gestion de l'erreur
             console.log(err);
             return;
+
         }
+
         response.listeAjout = result;
-        //console.log(result);
+        console.log(result);
  
        response.render('finAjoutPilote', response);
    } );

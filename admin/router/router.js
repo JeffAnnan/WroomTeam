@@ -48,10 +48,12 @@ app.post('/menu', HomeController.Connexion);
    app.get('/supprEcurie/:ecunum', AuthentificationController.AdminConnexion,EcurieController.SupprEcurie);
 
  //Résultats
-   app.get('/resultats', AuthentificationController.AdminConnexion,ResultatController.ListerResultat);
-   app.get('/GrandPrix/:gpnum',AuthentificationController.AdminConnexion, ResultatController.DetailResultat);
-
-
+   app.get('/resultats', AuthentificationController.AdminConnexion,ResultatController.Resultat);
+   app.get('/saisieResultat',AuthentificationController.AdminConnexion, ResultatController.SaisieResultat);
+  // supprimer
+   app.get('/suppResultat/:pilnum/:gpnum',AuthentificationController.AdminConnexion, ResultatController.SupprimerResultat);
+  // ajout
+    app.post('/ajoutResultat/:gpnum',AuthentificationController.AdminConnexion, ResultatController.AjoutResultat);
 
 
 // tout le reste

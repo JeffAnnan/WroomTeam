@@ -5,7 +5,14 @@
 *
 */
 
+
 let db = require('../configDb');
+var express = require('express'),
+    Busboy = require('busboy'),
+		inspect = require('util').inspect,
+    path = require('path'),
+    fs = require('fs');
+
 
 /*
 * Récupérer l'intégralité les écuries avec l'adresse de la photo du pays de l'écurie
@@ -51,7 +58,7 @@ module.exports.setPilote = function (data,callback) {
    // connection à la base
     db.getConnection(function(err, connexion){
         if(!err){
-            connexion.query('INSERT INTO pilote SET ? ',data,callback);
+            connexion.query('INSERT INTO pilote SET ?',data,callback);
             connexion.release();
          }
       });

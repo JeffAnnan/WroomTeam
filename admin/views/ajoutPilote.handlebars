@@ -1,10 +1,11 @@
 <h1>Ajouter un pilote</h1>
 
-<form action="/piloteAjoute" method="post">
+<form action="/piloteAjoute"  enctype="multipart/form-data" method="post">
   <label>Prénom</label><input type="text" name="pilprenom"><br />
   <label>Nom</label><input type="text" name="pilnom"><br />
   <label>Date de naissance</label><input type="date" name="pildatenais"><br />
   <label>Nationalité</label>
+  
     <select name="paynum">
       {{#each listeNationalite}}
       <option value="{{this.paynum}}">{{this.paynom}}</option>
