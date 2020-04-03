@@ -4,27 +4,27 @@
     <img src="image/act_add.png" alt="">
     Ajouter un pilote</a>
 <table>
-    <tr>      
+    <tr>
         <th>Nom</th>
         <th>Prénom</th>
         <th>Date de naissance</th>
         <th>Action</th>
     </tr>
-    
+
     {{#each listePilotes}}
     <tr>
         <td>{{this.pilnom}}</td>
         <td>{{this.pilprenom}}</td>
         <td>{{formatDate this.pildatenais 'DD MMMM YYYY'}} </td>
         <td>
-            <a href="/modif/{{this.pilnum}}">
+            <a href="/modif/{{this.pilnum}}/{{this.paynum}}/{{this.ecunum}}">
                 <img src="/image/act_edit.png">
                 Modifier
             </a>
             <a href="/supp/{{this.pilnum}}">
                 <img src="/image/act_delete.png">
                 Supprimer
-            </a>  
+            </a>
         </td>
     </tr>
     {{/each}}
