@@ -45,6 +45,7 @@ text-align: center;
 }
 .tabpayscir  {
 float:right;
+justify-self: flex-end;
 padding:10px;
 border:1px solid black;
 margin:10px
@@ -59,10 +60,35 @@ a  {
 text-decoration:none;
 color:#0072ff;
 }
+
+p{
+  margin: 0;
+}
 .lienNotFound {align:center; style="background-color: #1d81b1;color: #FFFFFF;text-transform: uppercase;"}
 .photoNotFound {
 max-height: 40%;
 max-width: 40%;
+}
+
+/*H O M E*/
+
+.contains{
+  display: flex;
+  justify-content: center;
+}
+
+.dernierRes{
+  width: 220px;
+  border: 1px solid black;
+  border-radius: 15px;
+  padding: 10px;
+}
+
+.upp{
+  text-transform: uppercase;
+  text-decoration:underline ;
+  text-align: center;
+  padding: 5px;
 }
 
 /* détail pilote & répertoire */
@@ -80,6 +106,20 @@ margin:10px;
 .displayPilote{
 display: inline-block;
 }
+
+.contenuPilote {
+  margin-top: 50px;
+  display: flex;
+}
+
+.info1{
+  margin-left: 10px;
+}
+
+.info2{
+  margin-left: 50px;
+}
+
 /* /////////////////////// */
 
 /* détail circuit */
@@ -87,50 +127,57 @@ display: inline-block;
 height: 32px;
 width: 32px;
 }
-.informationsComplestDetailCircuit{
-position: relative;
-}
-.vuePatielleDetailCircuit{
-position: absolute;
-left: 990px;
-z-index: 2;
-}
+
 .imagesDetailCircuit{
-height: 350px;
-width: 190px;
-z-index: 3;
+height: 190px;
+width: 300px;
 }
+
+.informationsComplestDetailCircuit{
+display: flex;
+text-align: start;
+}
+
 .infosCircuit{
-display: inline-block;
+  padding-left: 10px;
+}
+
+.text{
+  text-align: justify;
+  padding-right: 170px;
+  margin-top : 20px;
 }
 /* /////////////////////// */
 
 /* détail écurie */
-.informationsComplestDetailEcurie{
-position: relative;
-}
-.vuePatielleDetailEcurie{
-position: absolute;
-left: 990px;
-z-index: 2;
-}
+
 .imagesDetailEcurie{
-height: 290px;
-width: 270px;
-z-index: 3;
+width: 200px;
 }
 .infosEcurie{
-display: inline-block;
-vertical-align: top;
+  padding-left: 20px;
 }
+
+.piloteInfoBulle{
+  margin-top:20px;
+  width: 200px;
+}
+
 .displayVoitureEcurie{
 display: inline-block;
+margin-left: 10px;
+margin-top: 10px;
 }
 .sizeImageVoitureEcurie{
 height: 100px;
 width: 100px;
 
 }
+
+.informationsComplestDetailEcurie{
+  display: flex;
+  text-align: start;
+  }
 /* /////////////////////// */
 
 /* infobulle pilote écurie */
@@ -170,3 +217,30 @@ overflow:hidden;
 padding:8px;
 }
 /* /////////////////////// */
+
+
+/* R E S U L T A T S */
+
+.contenu{
+  display: inline;
+}
+
+.justify {
+  text-align: justify;
+}
+
+/**Tableau**/
+.table td, .table th {
+	border : 1px;
+	border-style:solid;
+	border-color:black;
+	width:20%;
+	height: 30px;
+}
+
+.table{
+	border-collapse: collapse;
+	margin: auto;
+  text-align: center;
+  margin-bottom: 20px;
+}
