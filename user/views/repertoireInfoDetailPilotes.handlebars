@@ -1,17 +1,24 @@
 {{> lettres}}
   <p></p>
 	{{#each listeInfoPilote}}
+  <div class="contenuPilote">
     <img class="sizeImageInfoPilote" src="/image/pilote/{{this.phoadresse}}" alt="image du pilote" />
-    <p>Nom : {{this.pilnom}} {{this.pilprenom}}</p>
-    <p>Date de naissance : {{formatDate this.pildatenais 'DD MMMM YYYY' }}</p>
-    <p>Nationalité : {{this.paynat}}</p>
-    <p>Poids : {{this.pilpoids}} kg </p>
-    <p>Taille : {{this.piltaille}} cm </p>
-    {{#if this.ecunom}}
-      <p>Ecurie : {{this.ecunom}}</p>
-    {{else}}
-      <p>Ecurie : Pas d'écurie cette année</p>
-    {{/if}}
+    <div class="info1">
+      <p><b>Nom : </b>{{this.pilnom}} {{this.pilprenom}}</p>
+      <p><b>Date de naissance : </b>{{formatDate this.pildatenais 'DD MMMM YYYY' }}</p>
+      <p><b>Nationalité : </b>{{this.paynat}}</p>
+      {{#if this.ecunom}}
+      <p><b>Ecurie : </b>{{this.ecunom}}</p>
+      {{else}}
+        <p><b>Ecurie : </b>Pas d'écurie cette année</p>
+      {{/if}}
+    </div>
+    <div class="info2">
+        <p><b>Poids : </b>{{this.pilpoids}} kg </p>
+        <p><b>Taille : </b>{{this.piltaille}} cm </p>
+    </div>
+  </div> 
+    
     
     {{#if ../listeSponsors}}
       <h2>Principaux sponsors :</h2>
