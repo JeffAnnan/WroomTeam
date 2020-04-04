@@ -1,16 +1,16 @@
-<h1>Ajouter un Circuit</h1>
+<h1 class="center">Ajouter un circuit</h1>
 
 <form action="/circuitAjoute" enctype="multipart/form-data" method="post">
-  <label>Nom</label><input type="text" name="cirnom"><br />
-  <label>Longueur</label><input type="text" name="cirlongueur"> m<br />
+  <label>Nom</label><input type="text" name="cirnom"><br /><br />
+  <label>Longueur</label><input type="text" size="5" name="cirlongueur"> m<br /><br />
   <label>Pays</label>
   <select name="paynum">
       {{#each listePays}}
       <option value="{{this.paynum}}">{{this.paynom}}</option>
       {{/each}}
-  </select><br />
-  <label>Image</label><input type="file" name="ciradresseimage"><br />
-  <label>Nombre de spectateurs</label><input type="text" name="cirnbspectateurs" multiple> personnes<br />
-  <label>Description</label><input type="textarea" name="cirtext"><br />
-  <input type="submit" value="ajouter">
+  </select><br /><br />
+  <label>Image</label><input type="file" name="ciradresseimage"><br /><br />
+  <label>Nombre de spectateurs</label><input type="text" size="10" name="cirnbspectateurs" multiple> personnes<br /><br />
+  <label>Description</label><textarea name="cirtext" rows="10" cols="120"></textarea><br /><br />
+  <div class="center"><input type="submit" value="Ajouter"></div>
 </form>

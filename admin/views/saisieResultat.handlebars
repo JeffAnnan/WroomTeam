@@ -1,6 +1,6 @@
-<h1>Saisie des résultats</h1>
+<h1 class="center">Saisie des résultats</h1>
 
-<table>
+<table class="table">
     <tr>
         <th></th>
         <th>Rang</th>
@@ -11,7 +11,7 @@
     
         {{#each listeTableau}}
     <tr>
-        <td><a href="/suppResultat/{{this.pilnum}}/{{this.gpnum}}"><img src="/image/act_delete.png"></a></td> 
+        <td class="croix"><a href="/suppResultat/{{this.pilnum}}/{{this.gpnum}}"><img src="/image/act_delete.png"></a></td> 
         <td>{{this.rang}}</td>
         <td>{{this.pilnom}}</td>
         <td>{{this.tempscourse}}</td>

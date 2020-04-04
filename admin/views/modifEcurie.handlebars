@@ -1,10 +1,10 @@
-<h1>Modifier une Ecurie</h1>
+<h1 class="center">Modifier une écurie</h1>
 {{#each listeInfoEcurieSelect}}
   <form action="/ecurieModifie/{{this.ecunum}}" method="post">
-      <label>Nom</label><input type="text" name="ecunom" value="{{this.ecunom}}"><br />
-      <label>Direcreur</label><input type="text" name="ecunomdir" value="{{this.ecunomdir}}"><br />
-      <label>Adresse du siege</label><input type="text" name="ecuadrsiege" value="{{this.ecuadrsiege}}"><br />
-      <label>Points</label><input type="text" name="ecupoints" value="{{this.ecupoints}}"><br />
+      <label>Nom</label><input type="text" name="ecunom" value="{{this.ecunom}}"><br /><br />
+      <label>Direcreur</label><input type="text" name="ecunomdir" value="{{this.ecunomdir}}"><br /><br />
+      <label>Adresse du siege</label><textarea name="ecuadrsiege" rows="3" cols="50">{{this.ecuadrsiege}}</textarea><br /><br />
+      <label>Points</label><input type="text" size="10" name="ecupoints" value="{{this.ecupoints}}"> pts<br /><br />
       <label>Pays</label>
       <select name="paynum">
 {{#each ../listePaysMemeQueEcurieSelect}}
@@ -14,9 +14,9 @@
     <option value="{{this.paynum}}">{{this.paynom}}</option>
   {{/if}}
 {{/each}}
-      </select><br />
+      </select><br /><br />
       <input type="hidden" name="ecuadresseimageDefault" value="{{this.ecuadresseimage}}">
-      <label>Image</label><input type="file" name="ecuadresseimageChangee" multiple><br />
-    <input type="submit" value="modifier">
+      <label>Image</label><input type="file" name="ecuadresseimageChangee" multiple><br /><br />
+    <div class="center"><input type="submit" value="Modifier"></div><br />
   </form>
 {{/each}}
