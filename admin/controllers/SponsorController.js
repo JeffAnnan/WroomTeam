@@ -59,7 +59,7 @@ console.log(data);
 
      async.parallel([
          function(callback){
-             model.getInfoSponsorSelect(data, (function (err, result) {callback(null,result) }));
+             model.getInfoSponsorSelect(data, data1, (function (err, result) {callback(null,result) }));
              //pour récupérer les informations du sponsor sélectionné
          }, // fin callback0
          function (callback){

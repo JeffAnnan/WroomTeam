@@ -39,7 +39,7 @@ module.exports.AjoutCircuit = function(request, response){
    let data1 = request;
    let data2 = response;
 
-   model.insertFile(data1, data2, function (err, result) {
+   model.setCircuit(data1, data2, function (err, result) {
        if (err) {
            // gestion de l'erreur
            console.log(err);
@@ -83,13 +83,11 @@ module.exports.AjoutCircuit = function(request, response){
      let data = request.body.cirnom;
      let data1 = request.body.cirlongueur;
      let data2 = request.body.paynum;
-     let data3 = request.body.ciradresseimageDefault;
-     let data4 = request.body.ciradresseimageChangee;
-     let data5 = request.body.cirnbspectateurs;
-     let data6 = request.body.cirtext;
-     let data7 = request.params.cirnum;
+     let data3 = request.body.cirnbspectateurs;
+     let data4 = request.body.cirtext;
+     let data5 = request.params.cirnum;
      //console.log(data, data1, data2, data3,data4, data5, data6, data7);
-     model.modifCircuit(data, data1, data2, data3,data4, data5, data6, data7, function (err, result) {
+     model.modifCircuit(data, data1, data2, data3,data4, data5, function (err, result) {
          if (err) {
              // gestion de l'erreur
              console.log(err);
