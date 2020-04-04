@@ -1,9 +1,9 @@
-<h1>Modifier un Circuit</h1>
+<h1 class="center">Modifier un circuit</h1>
 {{#each listeInfoCircuitSelect}}
   <form action="/circuitModifie/{{this.cirnum}}" method="post">
 
-      <label>Nom</label><input type="text" name="cirnom" value="{{this.cirnom}}"><br />
-      <label>Longueur</label><input type="text" name="cirlongueur" value="{{this.cirlongueur}}"> m<br />
+      <label>Nom</label><input type="text" name="cirnom" value="{{this.cirnom}}"><br /><br />
+      <label>Longueur</label><input type="text" name="cirlongueur" size="5" value="{{this.cirlongueur}}"> m<br /><br />
       <label>Pays</label>
 
       <select name="paynum">
@@ -14,12 +14,12 @@
     <option value="{{this.paynum}}">{{this.paynom}}</option>
   {{/if}}
 {{/each}}
-      </select><br />
+      </select><br /><br />
       <input type="hidden" name="ciradresseimageDefault" value="{{this.ciradresseimage}}">
-      <label>Image</label><input type="file" name="ciradresseimageChangee"><br />
-      <label>Nombre de spectateurs</label><input type="text" name="cirnbspectateurs" value="{{this.cirnbspectateurs}}"> personnes<br />
-      <label>Description</label><input type="textarea" name="cirtext" value="{{this.cirtext}}"><br />
+      <label>Image</label><input type="file" name="ciradresseimageChangee"><br /><br />
+      <label>Nombre de spectateurs</label><input type="text" name="cirnbspectateurs" size="10" value="{{this.cirnbspectateurs}}"> personnes<br /><br />
+      <label>Description</label><textarea name="cirtext" rows="10" cols="120">{{this.cirtext}}</textarea><br /><br />
 
-    <input type="submit" value="modifier">
+    <div class="center"><input type="submit" value="Modifier"></div>
   </form>
 {{/each}}

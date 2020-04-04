@@ -1,12 +1,22 @@
 {{#if session.admin}}
-<h1>Connecté</h1>
+<h1>Vous êtes connecté  </h1>
 
 {{else}}
-<h1>Connexion</h1>
+<div class="admin">
+    <div>
+        <h1 class="center">Administration</h1>
+        <form action="#" method="post">
+            <label>Login</label><input type="text" name="login"><br /><br />
+            <label>Mot de passe</label><input type="password" name="mdp"><br /><br />
+            <div class="center">
+                <input type="reset" value="Annuler">
+                <input type="submit" class="connexion" value="Connexion">
+            </div>
+        </form>
+    </div>
+</div>
 
-<form action="#" method="post">
-    <label>Login</label><input type="text" name="login"><br />
-    <label>Mot de passe</label><input type="password" name="mdp"><br />
-    <input type="submit">
-</form>
+
+
+
 {{/if}}

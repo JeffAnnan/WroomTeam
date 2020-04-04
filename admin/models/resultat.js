@@ -17,7 +17,7 @@ module.exports.getListeGrandPrix = function (callback) {
          if(!err){
                // s'il n'y a pas d'erreur de connexion
                // execution de la requête SQL
-                         let sql ="SELECT gpnum,gpnom FROM grandprix";
+                         let sql ="SELECT gpnum,gpnom FROM grandprix ORDER BY gpnom";
                         console.log (sql);
              connexion.query(sql, callback);
  
