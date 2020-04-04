@@ -47,7 +47,7 @@ module.exports.getListePays = function (callback) {
       });
 };
 
-module.exports.insertFile = function (req, res, callback) {
+module.exports.setCircuit = function (req, res, callback) {
 
 	var busboy = new Busboy({ headers: req.headers });
   //variables pour recuperer les donnes du formualaire qui ne sont plus accessibles
@@ -118,7 +118,7 @@ module.exports.getInfoCircuitSelect = function (cirnum,callback) {
 					// s'il n'y a pas d'erreur de connexion
 					// execution de la requête SQL
 					let sql ="SELECT cirnum, cirnom, cirlongueur, paynum, "+
-					"ciradresseimage, cirnbspectateurs, cirnbspectateurs, cirtext "+
+					"cirnbspectateurs, cirnbspectateurs, cirtext "+
 					"FROM circuit WHERE cirnum="+cirnum;
 					//console.log (sql);
 					 connexion.query(sql, callback);
@@ -147,26 +147,12 @@ module.exports.getListePaysMemeQueCircuitSelect= function (paynumSelect, callbac
 };
 
 
-module.exports.modifCircuit = function (cirnom, cirlongueur, paynum, ciradresseimageDefault, ciradresseimageChangee, cirnbspectateurs, cirtext, cirnum, callback) {
+module.exports.modifCircuit = function (cirnom, cirlongueur, paynum, cirnbspectateurs, cirtext, cirnum, callback) {
    // connection à la base
     db.getConnection(function(err, connexion){
         if(!err){
-					//on prend soit le input hidden qui reprend l'image du circuit
-					//si on desire changer d'image le secteur d'image charge une image,
-					//il faut donc prendre cette valeur et pas le nom de l'image chargee par default
-					//et qui correpond a l'image chargee lors de la creation du circuit
-					let ciradresseimage;
-					if (!ciradresseimageChangee=="") {
-						//l'adresse de l'image est celle selctionnee par le selcteur
-						ciradresseimage=ciradresseimageChangee
-					}else {
-						//l'adresse de l'image est celle chargee par default et saisie
-						//lors de la creation du circuit
-						ciradresseimage=ciradresseimageDefault
-					}
 					req="UPDATE circuit SET cirnom='"+cirnom+"', cirlongueur="+cirlongueur+
-					", paynum="+paynum+", ciradresseimage='"+ciradresseimage+
-					"', cirnbspectateurs="+cirnbspectateurs+", cirtext='"+cirtext+
+					", paynum="+paynum+", cirnbspectateurs="+cirnbspectateurs+", cirtext='"+cirtext+
 					"' WHERE cirnum="+cirnum;
 					//console.log(req);
             connexion.query(req,callback);

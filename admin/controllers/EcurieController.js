@@ -35,8 +35,10 @@ module.exports.AjoutEcurie = function(request, response){
 
  module.exports.FinAjoutEcurie = function(request, response){
     response.title = 'Ecurie ajoutée';
-    let data = request.body;
-    model.setEcurie(data, function (err, result) {
+    let data1 = request;
+    let data2 = response;
+
+    model.setEcurie(data1, data2, function (err, result) {
         if (err) {
             // gestion de l'erreur
             console.log(err);
@@ -85,11 +87,9 @@ module.exports.AjoutEcurie = function(request, response){
      let data3 = request.body.ecuadrsiege;
      let data4 = request.body.ecupoints;
      let data5 = request.body.paynum;
-     let data6 = request.body.ecuadresseimageDefault;
-     let data7 = request.body.ecuadresseimageChangee;
 
      //console.log(data, data1, data2, data3,data4, data5, data6, data7);
-     model.modifEcurie(data, data1, data2, data3,data4, data5, data6, data7, function (err, result) {
+     model.modifEcurie(data, data1, data2, data3,data4, data5, function (err, result) {
          if (err) {
              // gestion de l'erreur
              console.log(err);

@@ -1,4 +1,4 @@
-let model = require('../models/resultat.js'); 
+let model = require('../models/resultat.js');
 let async=require('async');
   // //////////////////////////L I S T E R    R E S U L T A T S
   module.exports.Resultat = function(request, response){
@@ -21,13 +21,13 @@ let async=require('async');
     async.parallel([
         function(callback){
             model.getTableauResultat(data,(function (err, result) {callback(null,result) }));
-            //pour afficher à nouveau les premères lettres des pilotes 
+            //pour afficher à nouveau les premères lettres des pilotes
         }, // fin callback0
         function (callback){
-            model.getCountLigne(data,(function (errPil, resultPil) {callback(null,resultPil) })); 
+            model.getCountLigne(data,(function (errPil, resultPil) {callback(null,resultPil) }));
         }, //fin callback 1
         function (callback){
-            model.getPiloteCourse(data,(function (errPil, resultPil) {callback(null,resultPil) })); 
+            model.getPiloteCourse(data,(function (errPil, resultPil) {callback(null,resultPil) }));
         }, //fin callback 2
     ],
     function (err,result){
@@ -73,7 +73,6 @@ let async=require('async');
 			 return;
 		 }
 		 //console.log(result);
- response.render('ajoutResultat', response);
+ response.render('finAjoutResultat', response);
  });
  }
-
