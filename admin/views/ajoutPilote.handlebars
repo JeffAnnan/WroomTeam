@@ -1,16 +1,10 @@
 <h1 class="center">Ajouter un pilote</h1>
 
-<<<<<<< HEAD
+
 <form action="/piloteAjoute" method="post">
   <label>Prénom</label><input type="text" name="pilprenom"><br /><br />
   <label>Nom</label><input type="text" name="pilnom"><br /><br />
   <label>Date de naissance</label><input type="date" name="pildatenais"><br /><br />
-=======
-<form action="/piloteAjoute" enctype="multipart/form-data" method="post">
-  <label>Prénom</label><input type="text" name="pilprenom"><br />
-  <label>Nom</label><input type="text" name="pilnom"><br />
-  <label>Date de naissance</label><input type="date" name="pildatenais"><br />
->>>>>>> f3c26913dcb4f502921ca45b50fcd4b48dceec19
   <label>Nationalité</label>
     <select name="paynum">
       {{#each listeNationalite}}
@@ -22,20 +16,10 @@
       {{#each listeEcurie}}
       <option value="{{this.ecunum}}">{{this.ecunom}}</option>
       {{/each}}
-<<<<<<< HEAD
   </select><br /><br />
   <label>Points</label><input type="text" size="10" name="pilpoints"> pts<br /><br />
   <label>Poids</label><input type="text" size="5" name="pilpoids"> kg<br /><br />
   <label>Taille</label><input type="text" size="5" name="piltaille"> cm<br /><br />
   <label>Description</label><textarea  name="piltexte"  rows="10" cols="120"></textarea><br /><br />
   <div class="center"><input type="submit" value="Ajouter"></div>
-=======
-  </select><br />
-  <label>Points</label><input type="text" name="pilpoints"> pts<br />
-  <label>Poids</label><input type="text" name="pilpoids"> kg<br />
-  <label>Taille</label><input type="text" name="piltaille"> cm<br />
-  <label>Image</label><input type="file" name="phoadresse"><br />
-  <label>Description</label><textarea  name="piltexte"  rows="10" cols="120"></textarea><br />
-  <input type="submit" value="ajouter">
->>>>>>> f3c26913dcb4f502921ca45b50fcd4b48dceec19
 </form>
