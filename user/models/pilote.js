@@ -92,7 +92,7 @@ module.exports.getPhoto = function (pilnum, callback) {
                   " FROM pilote pi"+
                   " INNER JOIN photo ph ON ph.pilnum=pi.pilnum"+
                   " WHERE phonum !=1 AND pi.pilnum="+pilnum;
-						console.log (sql);
+						//console.log (sql);
             connexion.query(sql, callback);
 
             // la connexion retourne dans le pool
