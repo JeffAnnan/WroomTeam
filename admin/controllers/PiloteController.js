@@ -24,10 +24,10 @@ module.exports.AjoutPilote = function(request, response){
     async.parallel([
         function(callback){
             modelEcurie.getListeEcurie(function (err, result) {callback(null,result) });
-            //pour afficher à nouveau les premères lettres des pilotes 
+            //pour afficher à nouveau les premères lettres des pilotes
         }, // fin callback0
         function (callback){
-            model.getNationalite((function (errPil, resultPil) {callback(null,resultPil) })); 
+            model.getNationalite((function (errPil, resultPil) {callback(null,resultPil) }));
         }, //fin callback 1
     ],
     function (err,result){
@@ -45,8 +45,10 @@ module.exports.AjoutPilote = function(request, response){
 
  module.exports.FinAjoutPilote = function(request, response){
     response.title = 'Pilote ajouté';
-    let data = request.body;
-    model.setPilote(data, function (err, result) {
+    let data1 = request;
+    let data2 = response;
+
+    model.setPilote(data1, data2, function (err, result) {
         if (err) {
             // gestion de l'erreur
             console.log(err);
@@ -54,7 +56,7 @@ module.exports.AjoutPilote = function(request, response){
         }
         response.listeAjout = result;
         //console.log(result);
- 
+
        response.render('finAjoutPilote', response);
    } );
  }
@@ -62,16 +64,18 @@ module.exports.AjoutPilote = function(request, response){
  module.exports.ModifierPilote = function(request, response){
     response.title = 'modifier un pilote';
     let data = request.params.pilnum;
+    let data2 = request.params.ecunum;
+    let data3 = request.params.paynum;
     async.parallel([
         function(callback){
             model.getInfoModif(data,(function (err, result) {callback(null,result) }));
-            //pour afficher à nouveau les premères lettres des pilotes 
+            //pour afficher à nouveau les premères lettres des pilotes
         }, // fin callback0
         function (callback){
-            modelEcurie.getListeEcurie((function (errPil, resultPil) {callback(null,resultPil) })); 
+            model.getListeEcuriePreSelect(data2, (function (errPil, resultPil) {callback(null,resultPil) }));
         }, //fin callback 1
         function (callback){
-            model.getNationalite((function (errPil, resultPil) {callback(null,resultPil) })); 
+            model.getNationalitePreSelect(data3, (function (errPil, resultPil) {callback(null,resultPil) }));
         }, //fin callback 2
     ],
     function (err,result){
@@ -81,8 +85,11 @@ module.exports.AjoutPilote = function(request, response){
             return;
         }
         response.listeInfoModif = result[0];
-        response.listeEcurie = result [1];
-        response.listeNationalite = result [2];
+        //on permet de pre-selectionner les selecteurs d'ecurie et de pays par une requete
+        //avec un booleen si le pays selectionne est le meme que les pays ou les ecuries
+        //passes en revu
+        response.listeEcuriePreSelect = result [1];
+        response.listeNationalitePreSelect = result [2];
         response.render('modifierPilote', response);
         }
     );// fin async
@@ -99,7 +106,7 @@ module.exports.AjoutPilote = function(request, response){
             return;
         }
 
- 
+
        response.render('finModifPilote', response);
    } );
  }
@@ -116,7 +123,3 @@ module.exports.AjoutPilote = function(request, response){
        response.render('supprimePilote', response);
    } );
  }
-  
-
-
- 
