@@ -20,7 +20,7 @@ module.exports.getListeGrandPrix = function (callback) {
                          let sql ="SELECT gpnum,gpnom,payadrdrap FROM " +
                              "grandprix g INNER JOIN circuit c ON g.cirnum=c.cirnum "+
                              " INNER JOIN pays p ON c.paynum=p.paynum ORDER BY gpnom ASC";
-                        console.log (sql);
+                        //console.log (sql);
              connexion.query(sql, callback);
  
              // la connexion retourne dans le pool
@@ -38,7 +38,7 @@ module.exports.getListeGrandPrix = function (callback) {
                          let sql ="SELECT gpnum,gpnom,gpdate,gpcommentaire FROM " +
                           "grandprix WHERE gpnum="+gpnum;
                         
-                        console.log (sql);
+                        //console.log (sql);
              connexion.query(sql, callback);
  
              // la connexion retourne dans le pool
@@ -72,9 +72,9 @@ module.exports.getListeGrandPrix = function (callback) {
                   " FROM course "+
                   "Where gpnum="+gpnum+
                ")t "+
-               "INNER JOIN PILOTE p on t.pilnum=p.pilnum"; 
+               "INNER JOIN PILOTE p on t.pilnum=p.pilnum LIMIT 10"; 
                         
-                        console.log (sql);
+                       // console.log (sql);
              connexion.query(sql, callback);
  
              // la connexion retourne dans le pool
