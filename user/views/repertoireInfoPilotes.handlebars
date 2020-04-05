@@ -1,17 +1,11 @@
 {{> lettres}}
-
-	 {{#each listeInfoPilote}}
-
-
-     <div class="displayPilote">
+<div class="wrap">
+	 {{#each listeInfoPilote}}  
+      <div>
           <a href="/detailInfoPilote/{{this.pilnum}}">
             <img class="sizeImageInfoPilote" src="/image/pilote/{{this.phoadresse}}" alt="image du pilote" />
           </a>
            <p> {{this.pilprenom}} {{this.pilnom}}</p>
-
-     </div>
-
-
-
-
-    {{/each}}
+     </div> 
+  {{/each}}
+</div>
