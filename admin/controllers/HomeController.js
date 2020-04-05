@@ -14,11 +14,11 @@ let Cryptr = require('cryptr');
 let cryptr = new Cryptr('MaSuperCléDeChiffrementDeouF');
 
 let async=require('async');
-// ////////////////////////  L I S T E R     C I R C U I T S
+// ////////////////////////  C O N N E X I O N 
 
 module.exports.Connexion = function(request, response){
 response.title = 'Connexion';
-let login = request.body.login;
+let login = request.body.login; 
 let mdp = request.body.mdp;
  model.getConnexion(login, function (err, result) {
      if (err) {
@@ -26,14 +26,14 @@ let mdp = request.body.mdp;
          console.log(err);
          return;
      }
-     let mdpDecrypte = cryptr.decrypt(result[0].passwd);
+     let mdpDecrypte = cryptr.decrypt(result[0].passwd); // On décrypte le mot de passe correspondant à l'utilisateur saisi de la bd
 
-     if(mdpDecrypte==mdp && login==result[0].login){
-        request.session.admin=true;
+     if(mdpDecrypte==mdp && login==result[0].login){ // Si le mot de passe saisi correspond à celui décrypté de la bd 
+        request.session.admin=true; // connexion possible -- admin = true
      }
      else
      {
-       request.session.admin=false;
+       request.session.admin=false; // sinon connexion impossible -- admin = false
      }
      response.connexion = result;
      response.render('home', response);

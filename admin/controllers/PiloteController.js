@@ -2,7 +2,7 @@ let async=require('async');
 let model = require('../models/pilote.js');
 let modelEcurie = require('../models/ecurie.js');
 
-// ///////////////////////// R E P E R T O I R E    D E S    P I L O T E S
+// ///////////////////////// G E S T I O N   D E S   P I L O T E S
 
 module.exports.Pilotes = function(request, response){
    response.title = 'Gestion des pilotes';
@@ -19,15 +19,18 @@ module.exports.Pilotes = function(request, response){
   } );
 }
 
+// ///////////////////////// A J O U T    D E S   P I L O T E S
+
 module.exports.AjoutPilote = function(request, response){
     response.title = 'ajouter un pilote';
     async.parallel([
         function(callback){
             modelEcurie.getListeEcurie(function (err, result) {callback(null,result) });
-            //pour afficher à nouveau les premères lettres des pilotes
+            //pour afficher la liste des écuries
         }, // fin callback0
         function (callback){
             model.getNationalite((function (errPil, resultPil) {callback(null,resultPil) }));
+            //pour afficher la liste des nationalités
         }, //fin callback 1
     ],
     function (err,result){
@@ -48,6 +51,7 @@ module.exports.AjoutPilote = function(request, response){
     let data1 = request;
     let data2 = response;
 
+    // insertion du pilote
     model.setPilote(data1, data2, function (err, result) {
         if (err) {
             // gestion de l'erreur
@@ -61,6 +65,8 @@ module.exports.AjoutPilote = function(request, response){
    } );
  }
 
+ // ///////////////////////// M O D I F I C A T I O N   D E S   P I L O T E S
+
  module.exports.ModifierPilote = function(request, response){
     response.title = 'modifier un pilote';
     let data = request.params.pilnum;
@@ -69,13 +75,15 @@ module.exports.AjoutPilote = function(request, response){
     async.parallel([
         function(callback){
             model.getInfoModif(data,(function (err, result) {callback(null,result) }));
-            //pour afficher à nouveau les premères lettres des pilotes
+            //pour afficher les infos concernant le pilote sélectionné
         }, // fin callback0
         function (callback){
             model.getListeEcuriePreSelect(data2, (function (errPil, resultPil) {callback(null,resultPil) }));
+            //pour préselectionné l'écurie correspondant au pilote
         }, //fin callback 1
         function (callback){
             model.getNationalitePreSelect(data3, (function (errPil, resultPil) {callback(null,resultPil) }));
+            //pour préselectionné la nationalité correspondant au pilote
         }, //fin callback 2
     ],
     function (err,result){
@@ -110,6 +118,8 @@ module.exports.AjoutPilote = function(request, response){
        response.render('finModifPilote', response);
    } );
  }
+
+ // ///////////////////////// S U P P R E S S I O N   D E S   P I L O T E S
 
  module.exports.SupprimerPilote = function(request, response){
     response.title = 'pilote supprimé';

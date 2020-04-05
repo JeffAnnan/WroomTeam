@@ -43,7 +43,7 @@ module.exports.getNationalite = function (callback) {
         if(!err){
         	  // s'il n'y a pas d'erreur de connexion
         	  // execution de la requête SQL
-						let sql ="SELECT paynum, paynom FROM pays ORDER BY paynom";
+						let sql ="SELECT paynum, paynat FROM pays ORDER BY paynom";
 						//console.log (sql);
             connexion.query(sql, callback);
 
@@ -158,7 +158,7 @@ module.exports.getInfoModif = function (pilnum, callback) {
         	  // s'il n'y a pas d'erreur de connexion
         	  // execution de la requête SQL
                   let sql ="SELECT pi.pilnum, pilnom, pilprenom, pildatenais, pilpoids, pilpoints, piltaille, piltexte,"+
-                  " paynom, ecunom"+
+                  " paynat, ecunom"+
                   " FROM pays p INNER JOIN pilote pi ON p.paynum=pi.paynum"+
                   " LEFT JOIN ecurie e ON pi.ecunum=e.ecunum"+
                   " WHERE pi.pilnum="+pilnum;
@@ -179,7 +179,7 @@ module.exports.getNationalitePreSelect = function (paynumSelect, callback) {
 					// s'il n'y a pas d'erreur de connexion
 					// execution de la requête SQL
 					//retourne true (1) si paynumSelect est le meme que le paynum parcouru
-					let sql ="SELECT paynum, paynom, IF(paynum="+paynumSelect+",true,false)"
+					let sql ="SELECT paynum, paynat, IF(paynum="+paynumSelect+",true,false)"
 					+" AS estmeme FROM pays ORDER BY paynom";
 					//console.log (sql);
 					connexion.query(sql, callback);
@@ -233,6 +233,8 @@ module.exports.updatePilote = function (pilnum,data,callback) {
       });
 }
 
+
+// SUPPRESSION D'UN PILOTE 
 module.exports.deletePilote = function (pilnum, callback2, callback1,callback4,callback3,callback) {
    // connection à la base
 	db.getConnection(function(err, connexion){

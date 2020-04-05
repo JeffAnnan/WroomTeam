@@ -11,6 +11,8 @@ let db = require('../configDb');
 * Récupérer l'intégralité les écuries avec l'adresse de la photo du pays de l'écurie
 * @return Un tableau qui contient le N°, le nom de l'écurie et le nom de la photo du drapeau du pays
 */
+
+// Récupère tous les grands prix avec le drapeau du pays
 module.exports.getListeGrandPrix = function (callback) {
     // connection à la base
      db.getConnection(function(err, connexion){
@@ -29,6 +31,7 @@ module.exports.getListeGrandPrix = function (callback) {
        });
  };
 
+ // Récupère le nom du grand prix et la date
  module.exports.getTitreResultat = function (gpnum, callback) {
     // connection à la base
      db.getConnection(function(err, connexion){
@@ -47,6 +50,7 @@ module.exports.getListeGrandPrix = function (callback) {
        });
  };
 
+ // Récupère les informations relatives au tableau des résultats + calcule les points
  module.exports.getTableauResultat = function (gpnum, callback) {
     // connection à la base
      db.getConnection(function(err, connexion){

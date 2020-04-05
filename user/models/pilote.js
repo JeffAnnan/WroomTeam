@@ -11,6 +11,8 @@ let db = require('../configDb');
 * Récupérer l'intégralité les écuries avec l'adresse de la photo du pays de l'écurie
 * @return Un tableau qui contient le N°, le nom de l'écurie et le nom de la photo du drapeau du pays
 */
+
+// Récupère les premières lettre du nom de chaque pilote dans la base de données
 module.exports.getLettrePilote = function (callback) {
    // connection à la base
 	db.getConnection(function(err, connexion){
@@ -27,6 +29,7 @@ module.exports.getLettrePilote = function (callback) {
       });
 };
 
+// Récupère le nom, prénom et adresse photo des pilotes commencant par la lettre sélectionnée
 module.exports.getInfoPilote = function (lettre, callback) {
    // connection à la base
 	db.getConnection(function(err, connexion){
@@ -43,6 +46,7 @@ module.exports.getInfoPilote = function (lettre, callback) {
       });
 };
 
+// Récupère les infos du pilote selectionné
 module.exports.getInfoDetailPilote = function (pilnum, callback) {
    // connection à la base
 	db.getConnection(function(err, connexion){
@@ -64,6 +68,7 @@ module.exports.getInfoDetailPilote = function (pilnum, callback) {
       });
 };
 
+// Récupère les sponsors du pilote sélectionné
 module.exports.getSponsors = function (pilnum, callback) {
    // connection à la base
 	db.getConnection(function(err, connexion){
@@ -82,6 +87,7 @@ module.exports.getSponsors = function (pilnum, callback) {
       });
 };
 
+// Récupère toutes les photos du pilote (sauf la photo officielle)
 module.exports.getPhoto = function (pilnum, callback) {
    // connection à la base
 	db.getConnection(function(err, connexion){
