@@ -8,10 +8,9 @@ let db = require('../configDb');
 var _ = require('underscore');
 
 /*
-* Récupérer l'intégralité des sponsors avec ...
-* @return Un tableau qui contient ...
+* Récupérer l'intégralité des sponsors
+* @return Un tableau qui contient le N°, le nom, le secteur d'activite des ecuries et leur N° d'ecrurie si elles en ont (sinon NULL)
 */
-
 // GESTION DES SPONSORS
 module.exports.getSponsors = function (callback) {
    // connection à la base

@@ -15,10 +15,9 @@ var express = require('express'),
     fs = require('fs');
 
 /*
-* Récupérer l'intégralité les écuries avec l'adresse de la photo du pays de l'écurie
-* @return Un tableau qui contient le N°, le nom de l'écurie et le nom de la photo du drapeau du pays
+* Récupérer l'intégralité des écuries
+* @return Un tableau qui contient le N°, le nom, le nom du directeur, les points et le pays des ecuries
 */
-
 // GESTION DES ECURIES
 module.exports.getListeEcurie = function (callback) {
    // connection à la base
