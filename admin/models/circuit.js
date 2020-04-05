@@ -14,10 +14,9 @@ var express = require('express'),
     fs = require('fs');
 
 /*
-* Récupérer l'intégralité des circuits avec l'adresse de la photo du pays du circuit
-* @return Un tableau qui contient le N°, le nom du circuitn  et le nom de la photo du drapeau du pays
+* Récupérer l'intégralité des circuits
+* @return Un tableau qui contient le N°, le nom, la pays, la longueur, le nombre de spectateurs des circuits
 */
-
 // GESTION DES CIRCUITS
 module.exports.getCircuits = function (callback) {
    // connection à la base

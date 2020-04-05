@@ -1,7 +1,7 @@
 let model = require('../models/circuit.js');
 let async=require('async');
-// ////////////////////////  L I S T E R     C I R C U I T S
 
+// ////////////////////////  L I S T E R     C I R C U I T S
 module.exports.ListerCircuit = function(request, response){
 response.title = 'Liste des circuits';
  model.getListeCircuit( function (err, result) {
@@ -16,6 +16,7 @@ response.render('listerCircuit', response);
 });
 }
 
+// ////////////////////////  D E T A I L S    C I R C U I T S
 module.exports.DetailCircuit = function(request, response){
     let data = request.params.cirnum;
     response.title = 'Détails du circuit N° '+ data;
@@ -28,6 +29,7 @@ module.exports.DetailCircuit = function(request, response){
         }, // fin callback0
         function (callback){
             model.getDetailCircuit(data, (function (errCir, resultCir) {callback(null,resultCir) }));
+            //pour afficher les informations du circuit (le detail du circuit selectionne)
         }, //fin callback 1
     ],
     function (err,result){

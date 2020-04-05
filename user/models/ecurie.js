@@ -30,10 +30,9 @@ module.exports.getListeEcurie = function (callback) {
 };
 
 /*
-* Récupérer l'intégralité des details des ecuries.
-* @return Un tableau qui contient le nom, la Longueur, le nombre de spectateurs, la description, l'adresse de la photo du ciruitn le pays
+* Récupérer l'intégralité des details d'une ecurie.
+* @return Un tableau qui contient le nom, le nom du directeur, l'adressse du siege, l'adresse de la photo de l'ecurie, la pays de l'ecurie selectionnee par son numero (ecunum)
 */
-
 module.exports.getDetailEcurie = function (ecunum, callback) {
    // connection à la base
 	db.getConnection(function(err, connexion){
@@ -53,6 +52,7 @@ module.exports.getDetailEcurie = function (ecunum, callback) {
       });
 };
 
+// Récupère l'ensemble des pilotes d'une ecurie donnee (par ecunum) donc donne si elle participe (si elle a des pilotes) ou pas au championnat
 module.exports.participeChampionnat = function (ecunum, callback) {
    // connection à la base
 	db.getConnection(function(err, connexion){
@@ -72,6 +72,7 @@ module.exports.participeChampionnat = function (ecunum, callback) {
       });
 };
 
+// Récupère les informations des voitures de l'ecurie selectionnee par son numero (ecunum)
 module.exports.getInfoVoitureEcurieParticipeChampionnat = function (ecunum, callback) {
    // connection à la base
 	db.getConnection(function(err, connexion){
