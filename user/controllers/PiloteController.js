@@ -18,6 +18,8 @@ module.exports.Repertoire = function(request, response){
   } );
 }
 
+// ///////////////////////// L I S T E   D E S    P I L O T E S
+
 module.exports.DetailRepertoire = function(request, response){
     let data = request.params.lettre;
     response.title = 'Pilote dont le nom commence par' + data;
@@ -40,13 +42,6 @@ module.exports.DetailRepertoire = function(request, response){
         response.listeLettrePilote = result[0];
 
         donnees=result[1];
-        /*
-        for (let i=1; 1<donnees.length; i++) {
-            if (i%3==0) {
-                donnees[i].ligne="1";
-            }//fin if
-        }//fin for
-        */
         response.listeInfoPilote=donnees;
         response.render('repertoireInfoPilotes', response);
         }
@@ -54,6 +49,7 @@ module.exports.DetailRepertoire = function(request, response){
 
  };
 
+// ///////////////////////// I N F O R M A T I O N    D U   P I L O T E 
 
  module.exports.DetailInfoPilote = function(request, response){
     response.title = 'Détail des infos des pilotes';
@@ -66,12 +62,15 @@ module.exports.DetailRepertoire = function(request, response){
         }, // fin callback0
         function (callback){
             model.getInfoDetailPilote(data, (function (errPil, resultPil) {callback(null,resultPil) })); 
+            // pour afficher les infos du pilote
         }, //fin callback 1
         function (callback){
             model.getSponsors(data, (function (errSp, resultSp) {callback(null,resultSp) })); 
+            // pour afficher les sponsors
         }, //fin callback 2
         function (callback){
             model.getPhoto(data, (function(errPh, resultPh){callback (null,resultPh)}));
+            // pour afficher les photos
         }
     ],
     function (err,result){

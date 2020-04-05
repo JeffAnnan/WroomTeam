@@ -1,8 +1,8 @@
 let model = require('../models/resultat.js');
 let async=require('async');
-  // //////////////////////////L I S T E R    R E S U L T A T S
+  // //////////////////////////G E S T I O N   D E S   R E S U L T A T S
   module.exports.Resultat = function(request, response){
-	response.title = 'Liste des résultats';
+	response.title = 'Gestion des résultats';
 	 model.getListeGrandPrix( function (err, result) {
 		 if (err) {
 			 // gestion de l'erreur
@@ -15,19 +15,22 @@ let async=require('async');
  });
  }
 
+  // //////////////////////////S A I S I E   D E S   R E S U L T A T S
  module.exports.SaisieResultat = function(request, response){
-    response.title = 'Saisie resultats';
+    response.title = 'Saisie des resultats';
     let data = request.query.gpnum;
     async.parallel([
         function(callback){
             model.getTableauResultat(data,(function (err, result) {callback(null,result) }));
-            //pour afficher à nouveau les premères lettres des pilotes
+            //pour afficher les informations à rentrer dans le tableau des résultats
         }, // fin callback0
         function (callback){
             model.getCountLigne(data,(function (errPil, resultPil) {callback(null,resultPil) }));
+            // pour compter les lignes du tableau
         }, //fin callback 1
         function (callback){
             model.getPiloteCourse(data,(function (errPil, resultPil) {callback(null,resultPil) }));
+            // pilotes non rentrés -- pour réaliser le sélect afin d'insérer une ligne
         }, //fin callback 2
     ],
     function (err,result){
@@ -44,11 +47,13 @@ let async=require('async');
     );// fin async
  };
 
+  // //////////////////////////S U P P R E S S I O N   D E S   R E S U L T A T S
+
  module.exports.SupprimerResultat = function(request, response){
     response.title = 'Supprimer des résultats';
     let pilnum = request.params.pilnum;
     let gpnum = request.params.gpnum;
-    console.log(gpnum);
+    //suppression
 	 model.deleteResultat(gpnum,pilnum, function (err, result) {
 		 if (err) {
 			 // gestion de l'erreur
@@ -60,12 +65,14 @@ let async=require('async');
  });
  }
 
+  // //////////////////////////A J O U T   D E S   R E S U L T A T S
+
  module.exports.AjoutResultat = function(request, response){
     response.title = 'Ajout de résultats';
     let pilnum = request.body.pilnum;
     let tempscourse = request.body.tempscourse;
     let gpnum = request.params.gpnum;
-    console.log(gpnum);
+    // insertion 
 	 model.ajoutResultat(gpnum,pilnum,tempscourse, function (err, result) {
 		 if (err) {
 			 // gestion de l'erreur

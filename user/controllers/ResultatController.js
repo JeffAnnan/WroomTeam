@@ -15,20 +15,24 @@ let async=require('async');
  });
  }
 
+ // ///////////////////////// T A B L E A U   D E S  R E S U L T A T S
+
  module.exports.DetailResultat = function(request, response){
     let data = request.params.gpnum;
     response.title = 'Détails du grand prix de '+ data;
     async.parallel([
         function(callback){
             model.getListeGrandPrix(function (err, result) {callback(null,result) });
-            //pour afficher à nouveau les premères lettres des pilotes
+            //pour afficher la vue partielle qui liste les grands prix
 
         }, // fin callback0
         function (callback){
             model.getTitreResultat(data, (function (errRes, resultRes) {callback(null,resultRes) }));
+            // pour afficher nom + date du grand prix
         }, //fin callback 1
         function (callback){
             model.getTableauResultat(data, (function (errTab, resultTab) {callback(null,resultTab) }));
+            // pour afficher le tableau des résultats
         }, //fin callback 1
     ],
     function (err,result){

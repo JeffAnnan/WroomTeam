@@ -1,5 +1,6 @@
 let db = require('../configDb');
 
+// Récupère le login et le mdp selon l'utilisateur entré
 module.exports.getConnexion = function (login,callback) {
     // connection à la base
      db.getConnection(function(err, connexion){

@@ -9,12 +9,12 @@
       <select name="paynum">
             {{#each listeNationalitePreSelect}}
                 {{#if this.estmeme}}
-                    <option value="{{this.paynum}}" selected>{{this.paynom}}</option>
+                    <option value="{{this.paynum}}" selected>{{this.paynat}}</option>
                 {{else}}
-                    <option value="{{this.paynum}}">{{this.paynom}}</option>
+                    <option value="{{this.paynum}}">{{this.paynat}}</option>
                 {{/if}}
              {{/each}}
-      </select><br />
+      </select><br /><br />
       <label>Ecurie</label>
       <select name="ecunum">
             {{#each listeEcuriePreSelect}}
@@ -24,7 +24,7 @@
                     <option value="{{this.ecunum}}">{{this.ecunom}}</option>
                 {{/if}}
             {{/each}}
-      </select><br />
+      </select><br /><br />
       <label>Points</label>
         {{#if listeInfoModif.0.pilpoints}}
           <input type="text" name="pilpoints" size="10" value="{{listeInfoModif.0.pilpoints}}"> pts<br /><br />

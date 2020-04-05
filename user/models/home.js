@@ -13,6 +13,8 @@ let db = require('../configDb');
 * Récupérer l'intégralité des circuits avec l'adresse de la photo du pays du circuit
 * @return Un tableau qui contient le N°, le nom du circuitn  et le nom de la photo du drapeau du pays
 */
+
+// Récupère le dernier résultat ainsi que la derniere mise à jour 
 module.exports.getHomeResultat = function (callback) {
    // connection à la base
 	db.getConnection(function(err, connexion){

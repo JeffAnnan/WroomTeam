@@ -11,6 +11,8 @@ let db = require('../configDb');
 * Récupérer l'intégralité les écuries avec l'adresse de la photo du pays de l'écurie
 * @return Un tableau qui contient le N°, le nom de l'écurie et le nom de la photo du drapeau du pays
 */
+
+//GESTION DES RESULTATS
 module.exports.getListeGrandPrix = function (callback) {
     // connection à la base
      db.getConnection(function(err, connexion){
@@ -18,7 +20,7 @@ module.exports.getListeGrandPrix = function (callback) {
                // s'il n'y a pas d'erreur de connexion
                // execution de la requête SQL
                          let sql ="SELECT gpnum,gpnom FROM grandprix ORDER BY gpnom";
-                        console.log (sql);
+                        //console.log (sql);
              connexion.query(sql, callback);
  
              // la connexion retourne dans le pool
@@ -27,7 +29,9 @@ module.exports.getListeGrandPrix = function (callback) {
        });
  };
 
+ //SAISIE DES RESULTATS
 
+// Récupérer les informations pour remplir le tableau des résultats + calculer les points
  module.exports.getTableauResultat = function (gpnum, callback) {
     // connection à la base
      db.getConnection(function(err, connexion){
@@ -64,6 +68,7 @@ module.exports.getListeGrandPrix = function (callback) {
        });
  };
 
+ // Compte le nombre de ligne afin d'insérer ou non un résultat dans le tableau 
  module.exports.getCountLigne = function (gpnum, callback) {
    // connection à la base
     db.getConnection(function(err, connexion){
@@ -88,30 +93,7 @@ module.exports.getListeGrandPrix = function (callback) {
       });
 };
 
- module.exports.getCountLigne = function (gpnum, callback) {
-   // connection à la base
-    db.getConnection(function(err, connexion){
-        if(!err){
-              // s'il n'y a pas d'erreur de connexion
-              // execution de la requête SQL
-              let sql= "Select count(*) AS ligne FROM "+
-              
-              "(SELECT gpnum,pilnum, tempscourse,ROW_NUMBER() OVER(ORDER BY tempscourse) AS rang"+
-
-                 " FROM course "+
-                 "Where gpnum="+gpnum+
-              ")t "+
-              "INNER JOIN PILOTE p on t.pilnum=p.pilnum"; 
-                       
-           // console.log (sql);
-            connexion.query(sql, callback);
-
-            // la connexion retourne dans le pool
-            connexion.release();
-         }
-      });
-};
-
+// Recupère les pilotes n'étant pas déjà dans le tableau des résultats afin d'en insérer 
 module.exports.getPiloteCourse = function (gpnum, callback) {
    // connection à la base
     db.getConnection(function(err, connexion){
@@ -123,7 +105,7 @@ module.exports.getPiloteCourse = function (gpnum, callback) {
               "INNER JOIN pilote p ON p.pilnum=t.pilnum "+
               "ORDER BY pilnom";
                        
-            console.log (sql);
+            //console.log (sql);
             connexion.query(sql, callback);
 
             // la connexion retourne dans le pool
@@ -132,6 +114,9 @@ module.exports.getPiloteCourse = function (gpnum, callback) {
       });
 };
 
+//SUPPRESSION 
+
+// Supprime une ligne du tableau des résultats
  module.exports.deleteResultat = function (gpnum, pilnum,callback2, callback1) {
    // connection à la base
 	db.getConnection(function(err, connexion){
@@ -140,8 +125,6 @@ module.exports.getPiloteCourse = function (gpnum, callback) {
              // execution de la requête SQL
                   let sql1="DELETE FROM essais WHERE gpnum="+gpnum+" AND pilnum="+pilnum;
                   let sql2="DELETE FROM course WHERE gpnum="+gpnum+" AND pilnum="+pilnum;
-                  
-                 
             connexion.query(sql2, callback2);
             connexion.query(sql1, callback1);
            
@@ -152,6 +135,9 @@ module.exports.getPiloteCourse = function (gpnum, callback) {
       });
 };
 
+// INSERTION
+
+// Insère une ligne dans le tableau des résultats
 module.exports.ajoutResultat = function (gpnum, pilnum,tempscourse, callback) {
    // connection à la base
 	db.getConnection(function(err, connexion){
