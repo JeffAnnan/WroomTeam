@@ -11,6 +11,8 @@ var _ = require('underscore');
 * Récupérer l'intégralité des sponsors avec ...
 * @return Un tableau qui contient ...
 */
+
+// GESTION DES SPONSORS
 module.exports.getSponsors = function (callback) {
    // connection à la base
 	db.getConnection(function(err, connexion){
@@ -28,6 +30,7 @@ module.exports.getSponsors = function (callback) {
       });
 };
 
+// AJOUTER UN SPONSOR
 module.exports.getListeEcuries = function (callback) {
    // connection à la base
 	db.getConnection(function(err, connexion){
@@ -43,23 +46,28 @@ module.exports.getListeEcuries = function (callback) {
          }
       });
 };
-
+// RENTRER LES INFOS DU SPONSOR DANS LA BASE DE DONNEES
 module.exports.setSponsor = function (data, callback) {
    //underscore module
+	 //module pour selectionner les informations souhaitee dans data
+	 //donnes a inserer dans Sponsor (on ne prend que sponom et sposectactivite)
    let dataSetInSponsor = _.pick(data, 'sponom', 'sposectactivite');
    // connection à la base
     db.getConnection(function(err, connexion){
         if(!err){
+					  //insertion du sponsor
             connexion.query('INSERT INTO sponsor SET ? ',dataSetInSponsor, function(err, result) {
-              //recuperation de dernier Id insere dans sponsor
+              //recuperation du dernier Id (sponum) insere dans sponsor
               let lastInsertedId=result.insertId;
+							//creation des donnees d'insertion dans la table finance (on y mettra sponum et ecunum par le extend)
               let sponumData = {
                 sponum: lastInsertedId
               };
-
+							//on recupere data seulement ecunum
               let dataSetInFinanceEcunum = _.pick(data,'ecunum');
-              //add sponum in data
+              //on ajoute dans les donnees d'insertion ecunum par extend
               let dataSetInFinance = _.extend(dataSetInFinanceEcunum, sponumData);
+
               //console.log(dataSetInFinance);
               connexion.query('INSERT INTO finance SET ? ',dataSetInFinance);
               callback();
@@ -71,24 +79,35 @@ module.exports.setSponsor = function (data, callback) {
     });
 };
 
+// MODIFIER SPONSOR - INFOS DE PRE-SELECTION
 module.exports.getInfoSponsorSelect = function (sponum, ecunum, callback) {
 	// connection à la base
 	db.getConnection(function(err, connexion){
 			 if(!err){
-					// s'il n'y a pas d'erreur de connexion
-					// execution de la requête SQL
-          let sql ="SELECT s.sponum, s.sponom, s.sposectactivite, f.ecunum FROM sponsor s"
-          +" LEFT JOIN finance f ON f.sponum=s.sponum WHERE s.sponum="+sponum+" AND f.ecunum="+ecunum;
-					//console.log (sql);
+				 // s'il n'y a pas d'erreur de connexion
+				 // execution de la requête SQL
+				 //si le sponsor n'a pas d'ecurie donc que ecunum est a null
+				 if (ecunum==null) {
+					 let sql ="SELECT s.sponum, s.sponom, s.sposectactivite, f.ecunum FROM sponsor s"
+					 +" LEFT JOIN finance f ON f.sponum=s.sponum WHERE s.sponum="+sponum;
+					 //console.log (sql);
 					 connexion.query(sql, callback);
-
 					 // la connexion retourne dans le pool
 					 connexion.release();
+				 }else {
+					 //si le sponsor a deja une ecurie on evite les doublons en selectionnant en plus par ecunum
+					 let sql ="SELECT s.sponum, s.sponom, s.sposectactivite, f.ecunum FROM sponsor s"
+					 +" LEFT JOIN finance f ON f.sponum=s.sponum WHERE s.sponum="+sponum+" AND f.ecunum="+ecunum;
+					 //console.log (sql);
+					 connexion.query(sql, callback);
+					 // la connexion retourne dans le pool
+					 connexion.release();
+				}
 			}
 	});
 };
-
-module.exports.getListePaysMemeQueSponsorSelect= function (ecunumSelect, callback) {
+// MODIFIER UN SPONSOR - PRE-SELECTIONNER L'ECURIE
+module.exports.getListeEcurieMemeQueSponsorSelect= function (ecunumSelect, callback) {
    // connection à la base
 	db.getConnection(function(err, connexion){
         if(!err){
@@ -101,6 +120,7 @@ module.exports.getListePaysMemeQueSponsorSelect= function (ecunumSelect, callbac
               sql ="SELECT ecunum, ecunom FROM ecurie ORDER BY ecunom";
             }else{
               //on pre-selectionne celle du sponsor en quesiton par l'ecunum du sponsor
+							//retourne true (1) si ecunumSelect est le meme que l'ecunum parcouru
               sql ="SELECT ecunum, ecunom, IF(ecunum="+ecunumSelect+",true,false)"
               +" AS estmeme FROM ecurie ORDER BY ecunom";
             }
@@ -114,8 +134,10 @@ module.exports.getListePaysMemeQueSponsorSelect= function (ecunumSelect, callbac
       });
 };
 
-
+// MODIFIER LES INFOS DU SPONSOR DANS LA BASE DE DONNEES
 module.exports.modifSponsor = function (sponom, sposectactivite, ecunum, sponum, ecunumAvantModif, callback) {
+	 // ecunumAvantModif correpond au numero d'ecurie avant que l'on ait effectué toute modification
+	 //sur elle.
    // connection à la base
     db.getConnection(function(err, connexion){
         if(!err){
@@ -142,7 +164,8 @@ module.exports.modifSponsor = function (sponom, sposectactivite, ecunum, sponum,
                 connexion.query(deleteInSponsor);
                 callback();
               }else {
-                //mise a jour de la table finance
+                //mise a jour de la table finance lorsqu'on modifie de maniere
+								//classique un sponsor
                 let reqFinance="UPDATE finance SET ecunum="+ecunum+
                 " WHERE sponum="+sponum;
                 //console.log(reqFinance);
@@ -152,12 +175,11 @@ module.exports.modifSponsor = function (sponom, sposectactivite, ecunum, sponum,
             }
           });
           connexion.release();
-
-
         }
     });
 };
 
+// SUPPRESSION D'UN SPONSOR
 module.exports.supprimerSponsor = function (sponum, callback) {
    // connection à la base
    db.getConnection(function(err, connexion){
