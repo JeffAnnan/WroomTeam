@@ -8,7 +8,7 @@
 
       <select name="ecunum">
     <option value="NULL" selected>Aucune</option>
-{{#each ../listePaysMemeQueSponsorSelect}}
+{{#each ../listeEcurieMemeQueSponsorSelect}}
   {{#if this.estmeme}}
     <option value="{{this.ecunum}}" selected>{{this.ecunom}}</option>
   {{else}}
