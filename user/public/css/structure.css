@@ -53,6 +53,10 @@ margin:10px
 border-radius:15px;
 }
 
+table.tabpayscir tbody tr td img {
+  width: 40px;
+}
+
 .myboth  {
 clear:both;
 }
