@@ -42,7 +42,7 @@ let async=require('async');
         response.listeTableau = result[0];
         response.listeLigne = result[1];
         response.listePilotes = result[2];
-        response.render('saisieResultat', response);
+        response.render('ajoutResultat', response);
         }
     );// fin async
  };
@@ -61,7 +61,7 @@ let async=require('async');
 			 return;
 		 }
 		 //console.log(result);
- response.render('suppResultat', response);
+ response.render('finSuppressionResultat', response);
  });
  }
 

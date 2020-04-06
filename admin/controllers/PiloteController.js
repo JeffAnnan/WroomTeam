@@ -130,6 +130,6 @@ module.exports.AjoutPilote = function(request, response){
             console.log(err);
             return;
         }
-       response.render('supprimePilote', response);
+       response.render('finSuppressionPilote', response);
    } );
  }
