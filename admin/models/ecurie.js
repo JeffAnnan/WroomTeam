@@ -141,8 +141,8 @@ module.exports.modifEcurie = function (ecunum, ecunom, ecunomdir, ecuadrsiege, e
    // connection à la base
     db.getConnection(function(err, connexion){
         if(!err){
-					req="UPDATE ecurie SET ecunom='"+ecunom+"', ecunomdir='"+ecunomdir+
-					"', ecuadrsiege='"+ecuadrsiege+"', ecupoints="+ecupoints+
+					req="UPDATE ecurie SET ecunom="+connexion.escape(ecunom)+", ecunomdir="+connexion.escape(ecunomdir)+
+					", ecuadrsiege="+connexion.escape(ecuadrsiege)+", ecupoints="+ecupoints+
 					", paynum="+paynum+" WHERE ecunum="+ecunum;
 					//console.log(req);
             connexion.query(req,callback);

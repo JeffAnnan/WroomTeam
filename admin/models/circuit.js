@@ -156,10 +156,10 @@ module.exports.modifCircuit = function (cirnom, cirlongueur, paynum, cirnbspecta
    // connection à la base
     db.getConnection(function(err, connexion){
         if(!err){
-					req="UPDATE circuit SET cirnom='"+cirnom+"', cirlongueur="+cirlongueur+
-					", paynum="+paynum+", cirnbspectateurs="+cirnbspectateurs+", cirtext='"+cirtext+
-					"' WHERE cirnum="+cirnum;
-					  //console.log(req);
+					req="UPDATE circuit SET cirnom="+connexion.escape(cirnom)+", cirlongueur="+cirlongueur+
+					", paynum="+paynum+", cirnbspectateurs="+cirnbspectateurs+", cirtext="+connexion.escape(cirtext)+
+					" WHERE cirnum="+cirnum;
+					//console.log(req);
             connexion.query(req,callback);
             connexion.release();
 
