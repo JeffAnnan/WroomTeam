@@ -8,10 +8,10 @@
         <th>Temps de la course</th>
         <th>Nombre de points</th>
     </tr>
-    
+
         {{#each listeTableau}}
     <tr>
-        <td class="croix"><a href="/suppResultat/{{this.pilnum}}/{{this.gpnum}}"><img src="/image/act_delete.png"></a></td> 
+        <td class="croix"><a href="/suppResultat/{{this.pilnum}}/{{this.gpnum}}"><img src="/image/act_delete.png"></a></td>
         <td>{{this.rang}}</td>
         <td>{{this.pilnom}}</td>
         <td>{{this.tempscourse}}</td>
@@ -20,7 +20,7 @@
     {{/each}}
 
     {{#ifCond  listeLigne.0.ligne '<' 10}}
-        <form action="/ajoutResultat/{{listeTableau.0.gpnum}}" method="post"> 
+        <form action="/ajoutResultat/{{listeTableau.0.gpnum}}" method="post">
             <td></td>
             <td>{{inc listeLigne.0.ligne}}</td>
             <td>
@@ -30,9 +30,9 @@
                     {{/each}}
                 </select>
             </td>
-            <td><input type="time" name="tempscourse" step="2"></td>
+            <td><input type="time" name="tempscourse" step="2" required></td>
             <td><input type="submit" value="Valider"></td>
-       </form> 
+       </form>
     {{/ifCond}}
-    
+
 </table>

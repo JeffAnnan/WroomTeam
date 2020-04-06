@@ -2,8 +2,8 @@
 {{#each listeInfoSponsorSelect}}
   <form action="/sponsorModifie/{{this.sponum}}/{{this.ecunum}}" method="post">
 
-      <label>Nom</label><input type="text" name="sponom" value="{{this.sponom}}"><br /><br />
-      <label>Secteur d'activite</label><input type="text" name="sposectactivite" value="{{this.sposectactivite}}"><br /><br />
+      <label>Nom</label><input type="text" name="sponom" value="{{this.sponom}}" required><br /><br />
+      <label>Secteur d'activite</label><input type="text" name="sposectactivite" value="{{this.sposectactivite}}" required><br /><br />
       <label>Ecurie sponsoriee</label>
 
       <select name="ecunum">

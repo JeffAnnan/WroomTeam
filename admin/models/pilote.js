@@ -15,10 +15,9 @@ var express = require('express'),
     fs = require('fs');
 
 /*
-* Récupérer l'intégralité les écuries avec l'adresse de la photo du pays de l'écurie
-* @return Un tableau qui contient le N°, le nom de l'écurie et le nom de la photo du drapeau du pays
+* Récupérer l'intégralité des pilotes
+* @return Un tableau qui contient pour les pilotes le N°, le nom, le prenom, la date de naissance, la nationalite, le numero de leur nationalites, le nom de leur pays, le N° de leur ecuries et le nom de leur ecuries
 */
-
 // GESTION DES PILOTES
 module.exports.getPilotes = function (callback) {
    // connection à la base

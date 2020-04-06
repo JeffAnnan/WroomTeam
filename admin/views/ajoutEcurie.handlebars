@@ -1,16 +1,16 @@
 <h1 class="center">Ajouter une écurie</h1>
 
 <form action="/ecurieAjoute" enctype="multipart/form-data" method="post">
-  <label>Nom</label><input type="text" name="ecunom"><br /><br />
-  <label>Directeur</label><input type="text" name="ecunomdir"><br /><br />
-  <label>Adresse du siege</label><textarea name="ecuadrsiege" rows="3" cols="50"></textarea><br /><br />
-  <label>Points</label><input type="text" size="10" name="ecupoints"> pts<br /><br />
+  <label>Nom</label><input type="text" name="ecunom" required><br /><br />
+  <label>Directeur</label><input type="text" name="ecunomdir" required><br /><br />
+  <label>Adresse du siege</label><textarea name="ecuadrsiege" rows="3" cols="50" required></textarea><br /><br />
+  <label>Points</label><input type="text" size="10" name="ecupoints" required> pts<br /><br />
   <label>Pays</label>
   <select name="paynum">
       {{#each listePays}}
       <option value="{{this.paynum}}">{{this.paynom}}</option>
       {{/each}}
   </select><br /><br />
-  <label>Image</label><input type="file" name="ecuadresseimage"><br /><br />
+  <label>Image</label><input type="file" name="ecuadresseimage" required><br /><br />
   <div class="center"><input type="submit" value="Ajouter"></div>
 </form>
