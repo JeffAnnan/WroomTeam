@@ -18,8 +18,10 @@ module.exports.getSponsors = function (callback) {
         if(!err){
         	  // s'il n'y a pas d'erreur de connexion
         	  // execution de la requête SQL
-						let sql ="SELECT s.sponum, s.sponom, s.sposectactivite, f.ecunum FROM sponsor s"
-            +" LEFT JOIN finance f ON f.sponum=s.sponum ORDER BY sponom";
+						//on elimine les doublons et ignorons les deuxiemes entites des doublons par le GROUP BY
+						//on ne prend que la premiere ligne d'un doublon
+						let sql="SELECT s.sponum, s.sponom, s.sposectactivite, f.ecunum FROM sponsor s "
+						+" LEFT JOIN (SELECT * FROM finance GROUP BY sponum) f ON f.sponum=s.sponum ORDER BY sponom";
 						//console.log (sql);
             connexion.query(sql, callback);
 
@@ -86,22 +88,22 @@ module.exports.getInfoSponsorSelect = function (sponum, ecunum, callback) {
 				 // s'il n'y a pas d'erreur de connexion
 				 // execution de la requête SQL
 				 //si le sponsor n'a pas d'ecurie donc que ecunum est a null
-				 if (ecunum==null) {
-					 let sql ="SELECT s.sponum, s.sponom, s.sposectactivite, f.ecunum FROM sponsor s"
-					 +" LEFT JOIN finance f ON f.sponum=s.sponum WHERE s.sponum="+sponum;
-					 //console.log (sql);
-					 connexion.query(sql, callback);
-					 // la connexion retourne dans le pool
-					 connexion.release();
-				 }else {
-					 //si le sponsor a deja une ecurie on evite les doublons en selectionnant en plus par ecunum
-					 let sql ="SELECT s.sponum, s.sponom, s.sposectactivite, f.ecunum FROM sponsor s"
-					 +" LEFT JOIN finance f ON f.sponum=s.sponum WHERE s.sponum="+sponum+" AND f.ecunum="+ecunum;
-					 //console.log (sql);
-					 connexion.query(sql, callback);
-					 // la connexion retourne dans le pool
-					 connexion.release();
-				}
+				 //si le sponsor n'a pas d'ecurie donc que ecunum est a null
+			 if (ecunum==null) {
+				 let sql ="SELECT s.sponum, s.sponom, s.sposectactivite, f.ecunum FROM sponsor s"
+				 +" LEFT JOIN finance f ON f.sponum=s.sponum WHERE s.sponum="+sponum;
+				 //console.log (sql);
+				 connexion.query(sql, callback);
+				 // la connexion retourne dans le pool
+				 connexion.release();
+			 }else {
+				 let sql ="SELECT s.sponum, s.sponom, s.sposectactivite, f.ecunum FROM sponsor s"
+				 +" LEFT JOIN finance f ON f.sponum=s.sponum WHERE s.sponum="+sponum+" AND f.ecunum="+ecunum;
+				 //console.log (sql);
+				 connexion.query(sql, callback);
+				 // la connexion retourne dans le pool
+				 connexion.release();
+			 }
 			}
 	});
 };
@@ -132,7 +134,6 @@ module.exports.getListeEcurieMemeQueSponsorSelect= function (ecunumSelect, callb
          }
       });
 };
-
 // MODIFIER LES INFOS DU SPONSOR DANS LA BASE DE DONNEES
 module.exports.modifSponsor = function (sponom, sposectactivite, ecunum, sponum, ecunumAvantModif, callback) {
 	 // ecunumAvantModif correpond au numero d'ecurie avant que l'on ait effectué toute modification
@@ -164,12 +165,20 @@ module.exports.modifSponsor = function (sponom, sposectactivite, ecunum, sponum,
                 callback();
               }else {
                 //mise a jour de la table finance lorsqu'on modifie de maniere
-								//classique un sponsor
-                let reqFinance="UPDATE finance SET ecunum="+ecunum+
-                " WHERE sponum="+sponum;
+								//classique un sponsor. Pour le cas des doublons de sponsor
+								// on supprime de la Base les lignes avec sponum et re-créons
+								// une ligne unique. Un sponsor sponsorise une ecurie
+								let deleteInSponsor="DELETE FROM finance WHERE sponum="+sponum;
                 //console.log(reqFinance);
-                connexion.query(reqFinance);
-                callback();
+                connexion.query(deleteInSponsor, function(){
+									//insertion dans la table finance
+									let reqFinance="INSERT INTO finance SET ecunum="+ecunum+
+									", sponum="+sponum;
+									//console.log(reqFinance);
+		              connexion.query(reqFinance);
+		              callback();
+								});
+
               }
             }
           });
