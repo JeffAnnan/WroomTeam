@@ -30,10 +30,9 @@ module.exports.getListeCircuit = function (callback) {
 };
 
 /*
-* Récupérer l'intégralité des details des circuits.
-* @return Un tableau qui contient le nom, la Longueur, le nombre de spectateurs, la description, l'adresse de la photo du ciruitn le pays
+* Récupérer l'intégralité des details d'un circuit.
+* @return Un tableau qui contient le nom, la Longueur, le nombre de spectateurs, la description, l'adresse de la photo du circuit, le pays du circuit selectionne par cirnum
 */
-
 module.exports.getDetailCircuit = function (cirnum, callback) {
    // connection à la base
 	db.getConnection(function(err, connexion){

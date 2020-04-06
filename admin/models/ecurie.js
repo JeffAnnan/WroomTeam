@@ -6,6 +6,8 @@
 */
 
 let db = require('../configDb');
+
+//modules necessaires pour upload un fichier
 var express = require('express'),
     Busboy = require('busboy'),
 		inspect = require('util').inspect,
@@ -13,9 +15,10 @@ var express = require('express'),
     fs = require('fs');
 
 /*
-* Récupérer l'intégralité les écuries avec l'adresse de la photo du pays de l'écurie
-* @return Un tableau qui contient le N°, le nom de l'écurie et le nom de la photo du drapeau du pays
+* Récupérer l'intégralité des écuries
+* @return Un tableau qui contient le N°, le nom, le nom du directeur, les points et le pays des ecuries
 */
+// GESTION DES ECURIES
 module.exports.getListeEcurie = function (callback) {
    // connection à la base
 	db.getConnection(function(err, connexion){
@@ -33,17 +36,18 @@ module.exports.getListeEcurie = function (callback) {
       });
 };
 
+// RENTRER LES INFOS DE L'ECURIE DANS LA BASE DE DONNEES
 module.exports.setEcurie = function (req, res, callback) {
 		var busboy = new Busboy({ headers: req.headers });
-	  //variables pour recuperer les donnes du formualaire qui ne sont plus accessibles
-	  //avec le request.body et utilisable en meme temps avec l'upload file
+	  //variables pour recuperer les donnees du formualaire qui ne sont plus accessibles
+	  //avec le request.body et utilisables en meme temps avec l'upload file
 	  //a cause du enctype="multipart/form-data" du formulaire
 	  //IMPORTANT : on recupere donc ces donnees grace a un middleware appele Busboy
 	  //busboy permet de parser les donnes recues. On recupere donc TOUTES les donnes
 	  //du formulaire
 	  var recupDonneeForm = [];
 		busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
-	    //on recupere ciradresseimage
+	    //avec Busboy on recupere ciradresseimage
 	    if (fieldname === 'ecuadresseimage') {
 	      recupDonneeForm.push(filename);
 	    }
@@ -52,30 +56,31 @@ module.exports.setEcurie = function (req, res, callback) {
 		});
 
 	  busboy.on('field', (fieldName, val) => {
-	    //on recupere ecunom
+	    //avec Busboy on recupere ecunom
 	    if (fieldName === 'ecunom') {
 	      recupDonneeForm.push(val);
 	    }
-	    //on recupere ecunomdir
+	    //avec Busboy on recupere ecunomdir
 	    if (fieldName === 'ecunomdir') {
 	      recupDonneeForm.push(val);
 	    }
-	    //on recupere ecuadrsiege
+	    //avec Busboy on recupere ecuadrsiege
 	    if (fieldName === 'ecuadrsiege') {
 	      recupDonneeForm.push(val);
 	    }
-	    //on recupere ecupoints
+	    //avec Busboy on recupere ecupoints
 	    if (fieldName === 'ecupoints') {
 	      recupDonneeForm.push(val);
 	    }
-	    //on recupere paynum
+	    //avec Busboy on recupere paynum
 	    if (fieldName === 'paynum') {
 	      recupDonneeForm.push(val);
 	    }
 	  });
 
+    //on termine le processus d'ajout d'une ecurie + upload le fichier
 		busboy.on('finish', function() {
-	     //compostion de la reponse que l'on aurez du avoir du formualire
+	     //compostion de la reponse (data du resuqest.body) que l'on aurait du avoir du formualire
 	     var data = {
 	        ecunom: recupDonneeForm[0],
 	        ecunomdir: recupDonneeForm[1],
@@ -84,7 +89,7 @@ module.exports.setEcurie = function (req, res, callback) {
 	        paynum: recupDonneeForm[4],
 	        ecuadresseimage: recupDonneeForm[5],
 	    };
-	    //insertion dans la BD
+	    //insertion dans la BD (table ecurie)
 	    db.getConnection(function(err, connexion){
 	       if(!err){
 	         connexion.query('INSERT INTO ecurie SET ? ',data, callback);
@@ -95,6 +100,7 @@ module.exports.setEcurie = function (req, res, callback) {
 		req.pipe(busboy);
 };
 
+// MODIFIER CIRCUIT - INFOS DE PRE-SELECTION
 module.exports.getInfoEcurieSelect = function (ecunum,callback) {
 	// connection à la base
 	db.getConnection(function(err, connexion){
@@ -111,13 +117,14 @@ module.exports.getInfoEcurieSelect = function (ecunum,callback) {
 			}
 	});
 };
-
+// MODIFIER UN CIRCUIT - PRE-SELECTIONNER LE PAYS
 module.exports.getListePaysMemeQueEcurieSelect= function (paynumSelect, callback) {
    // connection à la base
 	db.getConnection(function(err, connexion){
         if(!err){
         	  // s'il n'y a pas d'erreur de connexion
         	  // execution de la requête SQL
+            //retourne true (1) si paynumSelect est le meme que le paynum parcouru
 						let sql ="SELECT paynum, paynom, IF(paynum="+paynumSelect+",true,false)"
 						+" AS estmeme FROM pays ORDER BY paynom";
 						//console.log (sql);
@@ -129,6 +136,7 @@ module.exports.getListePaysMemeQueEcurieSelect= function (paynumSelect, callback
       });
 };
 
+// MODIFIER LES INFOS DE L'ECURIE DANS LA BASE DE DONNEES
 module.exports.modifEcurie = function (ecunum, ecunom, ecunomdir, ecuadrsiege, ecupoints, paynum, callback) {
    // connection à la base
     db.getConnection(function(err, connexion){
@@ -144,6 +152,7 @@ module.exports.modifEcurie = function (ecunum, ecunom, ecunomdir, ecuadrsiege, e
     });
 };
 
+// SUPPRESSION D'UNE ECURIE
 module.exports.supprimerEcurie = function (ecunum, callback) {
    // connection à la base
 	db.getConnection(function(err, connexion){

@@ -6,6 +6,8 @@
 */
 
 let db = require('../configDb');
+
+//modules necessaires pour upload un fichier
 var express = require('express'),
     Busboy = require('busboy'),
 		inspect = require('util').inspect,
@@ -13,10 +15,9 @@ var express = require('express'),
     fs = require('fs');
 
 /*
-* Récupérer l'intégralité les écuries avec l'adresse de la photo du pays de l'écurie
-* @return Un tableau qui contient le N°, le nom de l'écurie et le nom de la photo du drapeau du pays
+* Récupérer l'intégralité des pilotes
+* @return Un tableau qui contient pour les pilotes le N°, le nom, le prenom, la date de naissance, la nationalite, le numero de leur nationalites, le nom de leur pays, le N° de leur ecuries et le nom de leur ecuries
 */
-
 // GESTION DES PILOTES
 module.exports.getPilotes = function (callback) {
    // connection à la base
@@ -56,15 +57,15 @@ module.exports.getNationalite = function (callback) {
 // RENTRER LES INFOS DU PILOTE DANS LA BASE DE DONNEES
 module.exports.setPilote = function (req, res, callback) {
 	var busboy = new Busboy({ headers: req.headers });
-  //variables pour recuperer les donnes du formualaire qui ne sont plus accessibles
-  //avec le request.body et utilisable en meme temps avec l'upload file
+  //variables pour recuperer les donnees du formualaire qui ne sont plus accessibles
+  //avec le request.body et utilisables en meme temps avec l'upload file
   //a cause du enctype="multipart/form-data" du formulaire
   //IMPORTANT : on recupere donc ces donnees grace a un middleware appele Busboy
   //busboy permet de parser les donnes recues. On recupere donc TOUTES les donnes
   //du formulaire
   var recupDonneeForm = [];
 	busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
-    //on recupere phonum
+    //avec Busboy on recupere phonum
     if (fieldname === 'phoadresse') {
       recupDonneeForm.push(filename);
     }
@@ -73,48 +74,49 @@ module.exports.setPilote = function (req, res, callback) {
 	});
 
   busboy.on('field', (fieldName, val) => {
-    //on recupere pilprenom
+    //avec Busboy on recupere pilprenom
     if (fieldName === 'pilprenom') {
       recupDonneeForm.push(val);
     }
-    //on recupere pilnom
+    //avec Busboy on recupere pilnom
     if (fieldName === 'pilnom') {
       recupDonneeForm.push(val);
     }
-    //on recupere pildatenais
+    //avec Busboy on recupere pildatenais
     if (fieldName === 'pildatenais') {
       recupDonneeForm.push(val);
     }
-    //on recupere paynum
+    //avec Busboy on recupere paynum
     if (fieldName === 'paynum') {
       recupDonneeForm.push(val);
     }
-    //on recupere ecunum
+    //avec Busboy on recupere ecunum
     if (fieldName === 'ecunum') {
       recupDonneeForm.push(val);
     }
-		//on recupere pilpoints
+		//avec Busboy on recupere pilpoints
     if (fieldName === 'pilpoints') {
       recupDonneeForm.push(val);
     }
-    //on recupere pilpoids
+    //avec Busboy on recupere pilpoids
     if (fieldName === 'pilpoids') {
       recupDonneeForm.push(val);
     }
-    //on recupere piltaille
+    //avec Busboy on recupere piltaille
     if (fieldName === 'piltaille') {
       recupDonneeForm.push(val);
     }
-		//on recupere piltexte
+		//avec Busboy on recupere piltexte
     if (fieldName === 'piltexte') {
       recupDonneeForm.push(val);
     }
   });
 
+  //on termine le processus d'ajout de pilote + upload le fichier
 	busboy.on('finish', function() {
 		console.log(recupDonneeForm);
-     //compostion de la reponse que l'on aurez du avoir du formualire
-		 //on passe de l'incide 7 a 9 car on traite l'ajout de phoadresse dans un autre table
+     //compostion de la reponse (data du resuqest.body) que l'on aurait du avoir du formualire
+		 //on passe de l'incide 7 a 9 car on traite l'ajout de phoadresse dans une autre table
      var data = {
 				pilprenom: recupDonneeForm[0],
 			  pilnom: recupDonneeForm[1],
@@ -129,16 +131,20 @@ module.exports.setPilote = function (req, res, callback) {
     //insertion dans la BD
     db.getConnection(function(err, connexion){
        if(!err){
+         //insertion du pilote
          connexion.query('INSERT INTO pilote SET ? ',data, function(err, result) {
-					 //recuperation de dernier Id insere dans pilote
+
+					 //recuperation du dernier Id (pilnum) insere dans pilote
 					 let lastInsertedId=result.insertId;
-					 //creation des donnes d'insertion dans la table photo (on y mettra phonum, pilnum et phoadresse)
+					 //creation des donnees d'insertion dans la table photo (on y mettra phonum, pilnum et phoadresse)
+           //phonum = 1 car on ajoute qu'une photo principale au pilote
 					 let photoData = {
 						 phonum: '1',
 						 pilnum: lastInsertedId,
 						 phoadresse: recupDonneeForm[8]
 					 };
-					 console.log(photoData);
+					 //console.log(photoData);
+           //insertion dans la table photo
 					 connexion.query('INSERT INTO photo SET ? ',photoData);
 					 callback();
 
@@ -206,9 +212,9 @@ module.exports.getListeEcuriePreSelect = function (ecunumSelect, callback) {
 							connexion.release();
 					}else {
 							//si le pilote a deja une ecurie on pre-selectionne le selecteur d'ecurie
-							// s'il n'y a pas d'erreur de connexion
-							// execution de la requête SQL
 							//retourne true 1 si ecunumSelect est le meme que l'ecunum parcouru
+              // s'il n'y a pas d'erreur de connexion
+							// execution de la requête SQL
 							let sql ="SELECT ecunum, ecunom, IF(ecunum="+ecunumSelect+",true,false)"
 							+" AS estmeme FROM ecurie ORDER BY ecunom";
 							//console.log (sql);
@@ -234,7 +240,7 @@ module.exports.updatePilote = function (pilnum,data,callback) {
 }
 
 
-// SUPPRESSION D'UN PILOTE 
+// SUPPRESSION D'UN PILOTE
 module.exports.deletePilote = function (pilnum, callback2, callback1,callback4,callback3,callback) {
    // connection à la base
 	db.getConnection(function(err, connexion){

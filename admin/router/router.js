@@ -34,18 +34,24 @@ app.post('/menu', HomeController.Connexion);
 
  // circuits
    app.get('/circuits', AuthentificationController.AdminConnexion,CircuitController.Circuits);
+   //ajouter
    app.get('/ajoutCircuit', AuthentificationController.AdminConnexion,CircuitController.AjoutCircuit);
    app.post('/circuitAjoute',AuthentificationController.AdminConnexion, CircuitController.FinAjoutCircuit);
+   //modifier
    app.get('/modifCircuit/:cirnum/:paynum', AuthentificationController.AdminConnexion,CircuitController.ModifCircuit);
    app.post('/circuitModifie/:cirnum', AuthentificationController.AdminConnexion,CircuitController.FinModifCircuit);
+   // supprimer
    app.get('/supprCircuit/:cirnum',AuthentificationController.AdminConnexion, CircuitController.SupprCircuit);
 
 // Ecuries
    app.get('/ecuries', AuthentificationController.AdminConnexion,EcurieController.ListerEcurie);
+   //ajouter
    app.get('/ajoutEcurie', AuthentificationController.AdminConnexion,EcurieController.AjoutEcurie);
    app.post('/ecurieAjoute', AuthentificationController.AdminConnexion,EcurieController.FinAjoutEcurie);
+    //modifier
    app.get('/modifEcurie/:ecunum/:paynum', AuthentificationController.AdminConnexion,EcurieController.ModifEcurie);
    app.post('/ecurieModifie/:ecunum', AuthentificationController.AdminConnexion,EcurieController.FinModifEcurie);
+   // supprimer
    app.get('/supprEcurie/:ecunum', AuthentificationController.AdminConnexion,EcurieController.SupprEcurie);
 
  //Résultats
@@ -58,10 +64,13 @@ app.post('/menu', HomeController.Connexion);
 
  // Sponsors
    app.get('/sponsor',AuthentificationController.AdminConnexion, SponsorController.Sponsors);
+   //ajouter
    app.get('/ajoutSponsor', AuthentificationController.AdminConnexion,SponsorController.AjoutSponsor);
    app.post('/sponsorAjoute', AuthentificationController.AdminConnexion,SponsorController.FinAjoutSponsor);
+   //modifier
    app.get('/modifSponsor/:sponum/:ecunum?', AuthentificationController.AdminConnexion,SponsorController.ModifSponsor);
    app.post('/sponsorModifie/:sponum/:ecunum?', AuthentificationController.AdminConnexion,SponsorController.FinModifSponsor);
+   // supprimer
    app.get('/supprSponsor/:sponum', AuthentificationController.AdminConnexion,SponsorController.SupprSponsor);
 
 

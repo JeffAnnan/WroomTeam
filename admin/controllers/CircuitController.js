@@ -1,7 +1,7 @@
 let model = require('../models/circuit.js');
 let async=require('async');
-// ///////////////////////// R E P E R T O I R E    D E S    C I R C U I T S
 
+// //////////////////////////G E S T I O N   D E S C I R C U I T S
 module.exports.Circuits = function(request, response){
   response.title = 'Gestion des circuits';
      model.getCircuits( function (err, result) {
@@ -17,6 +17,7 @@ module.exports.Circuits = function(request, response){
     } );
 };
 
+// ///////////////////////// A J O U T    D E S   C I R C U I T S
 module.exports.AjoutCircuit = function(request, response){
 
     response.title = 'ajouter un circuit';
@@ -33,13 +34,13 @@ module.exports.AjoutCircuit = function(request, response){
     } );
 
  };
-
+/**Insertion dans la base de donnees des informations saisies du circuit**/
  module.exports.FinAjoutCircuit = function(request, response){
    response.title = 'Circuit ajouté';
-   let data1 = request;
-   let data2 = response;
+   let req = request;
+   let res = response;
 
-   model.setCircuit(data1, data2, function (err, result) {
+   model.setCircuit(req, res, function (err, result) {
        if (err) {
            // gestion de l'erreur
            console.log(err);
@@ -51,17 +52,22 @@ module.exports.AjoutCircuit = function(request, response){
    } );
  };
 
+// ///////////////////////// M O D I F I C A T I O N   D E S   C I R C U I T S
  module.exports.ModifCircuit = function(request, response){
      response.title = 'modifier un circuit';
-     let data = request.params.cirnum;
-     let data1 = request.params.paynum;
+     let cirnum = request.params.cirnum;
+     let paynum = request.params.paynum;
      async.parallel([
          function(callback){
-             model.getInfoCircuitSelect(data, (function (err, result) {callback(null,result) }));
+             model.getInfoCircuitSelect(cirnum, (function (err, result) {callback(null,result) }));
              //pour récupérer les informations du circuit sélectionné
          }, // fin callback0
          function (callback){
-             model.getListePaysMemeQueCircuitSelect(data1, (function (errPays, resultPays) {callback(null,resultPays) }));
+             model.getListePaysMemeQueCircuitSelect(paynum, (function (errPays, resultPays) {callback(null,resultPays) }));
+             //pour recuperer une requete indiquant si le pays du ciruit selectionne est le meme que l'un des pays passe
+             //en revue dans la liste de l'ensemble des pays existant en BD.
+             //Cela permet pour chaque pays passe en revue de rendre 1 (true) ou 0 (false)
+             //et ainsi pre-selectionner un pays (celui du circuit en question) dans le menu deroulant
          }, //fin callback 1
      ],
      function (err,result){
@@ -72,22 +78,20 @@ module.exports.AjoutCircuit = function(request, response){
          }
          response.listeInfoCircuitSelect = result[0];
          response.listePaysMemeQueCircuitSelect = result[1];
-         //console.log(result[0]);
          response.render('modifCircuit', response);
          }
      );// fin async
   };
-
+  /**Update dans la base de donnees des informations saisies et modifiees du circuit**/
   module.exports.FinModifCircuit = function(request, response){
      response.title = 'Circuit modifié';
-     let data = request.body.cirnom;
-     let data1 = request.body.cirlongueur;
-     let data2 = request.body.paynum;
-     let data3 = request.body.cirnbspectateurs;
-     let data4 = request.body.cirtext;
-     let data5 = request.params.cirnum;
-     //console.log(data, data1, data2, data3,data4, data5, data6, data7);
-     model.modifCircuit(data, data1, data2, data3,data4, data5, function (err, result) {
+     let cirnom = request.body.cirnom;
+     let cirlongueur = request.body.cirlongueur;
+     let paynum = request.body.paynum;
+     let cirnbspectateurs = request.body.cirnbspectateurs;
+     let cirtext = request.body.cirtext;
+     let cirnum = request.params.cirnum;
+     model.modifCircuit(cirnom, cirlongueur, paynum, cirnbspectateurs, cirtext, cirnum, function (err, result) {
          if (err) {
              // gestion de l'erreur
              console.log(err);
@@ -100,10 +104,11 @@ module.exports.AjoutCircuit = function(request, response){
     } );
   };
 
+  // ///////////////////////// S U P P R E S S I O N   D E S   C I R C U I T S
   module.exports.SupprCircuit = function(request, response){
       response.title = 'supprimer un circuit';
-      let data = request.params.cirnum;
-      model.supprimerCircuit(data, function (err, result) {
+      let cirnum = request.params.cirnum;
+      model.supprimerCircuit(cirnum, function (err, result) {
           if (err) {
               // gestion de l'erreur
               console.log(err);

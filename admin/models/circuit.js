@@ -5,6 +5,8 @@
 *
 */
 let db = require('../configDb');
+
+//modules necessaires pour upload un fichier
 var express = require('express'),
     Busboy = require('busboy'),
 		inspect = require('util').inspect,
@@ -12,9 +14,10 @@ var express = require('express'),
     fs = require('fs');
 
 /*
-* Récupérer l'intégralité des circuits avec l'adresse de la photo du pays du circuit
-* @return Un tableau qui contient le N°, le nom du circuitn  et le nom de la photo du drapeau du pays
+* Récupérer l'intégralité des circuits
+* @return Un tableau qui contient le N°, le nom, la pays, la longueur, le nombre de spectateurs des circuits
 */
+// GESTION DES CIRCUITS
 module.exports.getCircuits = function (callback) {
    // connection à la base
 	db.getConnection(function(err, connexion){
@@ -31,6 +34,7 @@ module.exports.getCircuits = function (callback) {
       });
 };
 
+// AJOUTER UN CIRCUIT
 module.exports.getListePays = function (callback) {
    // connection à la base
 	db.getConnection(function(err, connexion){
@@ -46,19 +50,19 @@ module.exports.getListePays = function (callback) {
          }
       });
 };
-
+// RENTRER LES INFOS DU CIRCUIT DANS LA BASE DE DONNEES
 module.exports.setCircuit = function (req, res, callback) {
 
 	var busboy = new Busboy({ headers: req.headers });
-  //variables pour recuperer les donnes du formualaire qui ne sont plus accessibles
-  //avec le request.body et utilisable en meme temps avec l'upload file
+  //variables pour recuperer les donnees du formualaire qui ne sont plus accessibles
+  //avec le request.body et utilisables en meme temps avec l'upload file
   //a cause du enctype="multipart/form-data" du formulaire
   //IMPORTANT : on recupere donc ces donnees grace a un middleware appele Busboy
   //busboy permet de parser les donnes recues. On recupere donc TOUTES les donnes
   //du formulaire
   var recupDonneeForm = [];
 	busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
-    //on recupere ciradresseimage
+    //avec Busboy on recupere ciradresseimage
     if (fieldname === 'ciradresseimage') {
       recupDonneeForm.push(filename);
     }
@@ -67,30 +71,31 @@ module.exports.setCircuit = function (req, res, callback) {
 	});
 
   busboy.on('field', (fieldName, val) => {
-    //on recupere cirnom
+    //avec Busboy on recupere cirnom
     if (fieldName === 'cirnom') {
       recupDonneeForm.push(val);
     }
-    //on recupere cirlongueur
+    //avec Busboy on recupere cirlongueur
     if (fieldName === 'cirlongueur') {
       recupDonneeForm.push(val);
     }
-    //on recupere paynum
+    //avec Busboy on recupere paynum
     if (fieldName === 'paynum') {
       recupDonneeForm.push(val);
     }
-    //on recupere cirnbspectateurs
+    //avec Busboy on recupere cirnbspectateurs
     if (fieldName === 'cirnbspectateurs') {
       recupDonneeForm.push(val);
     }
-    //on recupere cirtext
+    //avec Busboy on recupere cirtext
     if (fieldName === 'cirtext') {
       recupDonneeForm.push(val);
     }
   });
 
+  //on termine le processus d'ajout du circuit + upload le fichier
 	busboy.on('finish', function() {
-     //compostion de la reponse que l'on aurez du avoir du formualire
+     //compostion de la reponse (data du resuqest.body) que l'on aurait du avoir du formualire
      var data = {
         cirnom: recupDonneeForm[0],
         cirlongueur: recupDonneeForm[1],
@@ -99,7 +104,7 @@ module.exports.setCircuit = function (req, res, callback) {
         cirnbspectateurs: recupDonneeForm[4],
         cirtext: recupDonneeForm[5],
     };
-    //insertion dans la BD
+    //insertion dans la BD (table circuit)
     db.getConnection(function(err, connexion){
        if(!err){
          connexion.query('INSERT INTO circuit SET ? ',data, callback);
@@ -111,6 +116,7 @@ module.exports.setCircuit = function (req, res, callback) {
 
 };
 
+// MODIFIER CIRCUIT - INFOS DE PRE-SELECTION
 module.exports.getInfoCircuitSelect = function (cirnum,callback) {
 	// connection à la base
 	db.getConnection(function(err, connexion){
@@ -128,25 +134,24 @@ module.exports.getInfoCircuitSelect = function (cirnum,callback) {
 			}
 	});
 };
-
+// MODIFIER UN CIRCUIT - PRE-SELECTIONNER LE PAYS
 module.exports.getListePaysMemeQueCircuitSelect= function (paynumSelect, callback) {
    // connection à la base
 	db.getConnection(function(err, connexion){
         if(!err){
         	  // s'il n'y a pas d'erreur de connexion
         	  // execution de la requête SQL
+            //retourne true (1) si paynumSelect est le meme que le paynum parcouru
 						let sql ="SELECT paynum, paynom, IF(paynum="+paynumSelect+",true,false)"
 						+" AS estmeme FROM pays ORDER BY paynom";
             //console.log (sql);
             connexion.query(sql, callback);
-
             // la connexion retourne dans le pool
             connexion.release();
          }
       });
 };
-
-
+// MODIFIER LES INFOS DU CIRCUIT DANS LA BASE DE DONNEES
 module.exports.modifCircuit = function (cirnom, cirlongueur, paynum, cirnbspectateurs, cirtext, cirnum, callback) {
    // connection à la base
     db.getConnection(function(err, connexion){
@@ -162,6 +167,7 @@ module.exports.modifCircuit = function (cirnom, cirlongueur, paynum, cirnbspecta
     });
 };
 
+// SUPPRESSION D'UN CIRCUIT
 module.exports.supprimerCircuit = function (cirnum, callback) {
    // connection à la base
 	db.getConnection(function(err, connexion){
