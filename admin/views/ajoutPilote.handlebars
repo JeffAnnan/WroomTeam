@@ -1,9 +1,9 @@
 <h1 class="center">Ajouter un pilote</h1>
 
 <form action="/piloteAjoute" enctype="multipart/form-data" method="post">
-  <label>Prénom</label><input type="text" name="pilprenom"><br /><br />
-  <label>Nom</label><input type="text" name="pilnom"><br /><br />
-  <label>Date de naissance</label><input type="date" name="pildatenais"><br /><br />
+  <label>Prénom</label><input type="text" name="pilprenom" required><br /><br />
+  <label>Nom</label><input type="text" name="pilnom" required><br /><br />
+  <label>Date de naissance</label><input type="date" name="pildatenais" required><br /><br />
 
   <label>Nationalité</label>
     <select name="paynum">
@@ -17,11 +17,11 @@
       <option value="{{this.ecunum}}">{{this.ecunom}}</option>
       {{/each}}
   </select><br /><br />
-  <label>Points</label><input type="text" size="10" name="pilpoints"> pts<br /><br />
-  <label>Poids</label><input type="text" size="5" name="pilpoids"> kg<br /><br />
-  <label>Taille</label><input type="text" size="5" name="piltaille"> cm<br /><br />
-  <label>Image</label><input type="file" name="phoadresse"><br /><br />
-  <label>Description</label><textarea  name="piltexte"  rows="10" cols="100"></textarea><br /><br />
+  <label>Points</label><input type="text" size="10" name="pilpoints" required> pts<br /><br />
+  <label>Poids</label><input type="text" size="5" name="pilpoids" required> kg<br /><br />
+  <label>Taille</label><input type="text" size="5" name="piltaille" required> cm<br /><br />
+  <label>Image</label><input type="file" name="phoadresse" required><br /><br />
+  <label>Description</label><textarea  name="piltexte"  rows="10" cols="100" required></textarea><br /><br />
   <div class="center"><input type="submit" value="Ajouter"></div>
 
 </form>

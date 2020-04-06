@@ -151,7 +151,6 @@ module.exports.getListePaysMemeQueCircuitSelect= function (paynumSelect, callbac
          }
       });
 };
-
 // MODIFIER LES INFOS DU CIRCUIT DANS LA BASE DE DONNEES
 module.exports.modifCircuit = function (cirnom, cirlongueur, paynum, cirnbspectateurs, cirtext, cirnum, callback) {
    // connection à la base
