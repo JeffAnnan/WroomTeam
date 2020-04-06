@@ -142,7 +142,7 @@ module.exports.modifSponsor = function (sponom, sposectactivite, ecunum, sponum,
     db.getConnection(function(err, connexion){
         if(!err){
           //mise a jour de la table sponsor
-					let reqSponsor="UPDATE sponsor SET sponom='"+sponom+"', sposectactivite='"+sposectactivite+
+					let reqSponsor="UPDATE sponsor SET sponom='"+connexion.escape(sponom)+"', sposectactivite='"+connexion.escape(sposectactivite)+
           "' WHERE sponum="+sponum;
 					//console.log(reqSponsor);
 
@@ -150,8 +150,8 @@ module.exports.modifSponsor = function (sponom, sposectactivite, ecunum, sponum,
             //si c'est la premiere fois que l'on donne une ecurie en modifiant un sponsor
             if (ecunumAvantModif==null) {
               //insertion dans la table finance
-              let reqFinance="INSERT INTO finance SET ecunum="+ecunum+
-              ", sponum="+sponum;
+              let reqFinance="INSERT INTO finance SET ecunum="+connexion.escape(ecunum)+
+              ", sponum="+connexion.escape(sponum);
               //console.log(reqFinance);
               connexion.query(reqFinance);
               callback();
@@ -172,8 +172,8 @@ module.exports.modifSponsor = function (sponom, sposectactivite, ecunum, sponum,
                 //console.log(reqFinance);
                 connexion.query(deleteInSponsor, function(){
 									//insertion dans la table finance
-									let reqFinance="INSERT INTO finance SET ecunum="+ecunum+
-									", sponum="+sponum;
+									let reqFinance="INSERT INTO finance SET ecunum="+connexion.escape(ecunum)+
+									", sponum="+connexion.escape(sponum);
 									//console.log(reqFinance);
 		              connexion.query(reqFinance);
 		              callback();
